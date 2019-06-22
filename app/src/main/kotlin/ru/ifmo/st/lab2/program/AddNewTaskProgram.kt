@@ -17,7 +17,7 @@ class AddNewTaskProgram : BaseProgram() {
         finish()
     }
 
-    override fun process(input: String) {
+    override suspend fun process(input: String) {
 
     }
 }

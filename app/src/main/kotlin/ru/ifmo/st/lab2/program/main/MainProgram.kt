@@ -21,7 +21,7 @@ class MainProgram : BaseProgram() {
         //printHelp()
     }
 
-    override fun process(input: String) {
+    override suspend  fun process(input: String) {
         val command = parseCommand(input.trim())
         when (command.name) {
             ADD_TASK_COMMAND -> context.startProgram<AddNewTaskProgram>()

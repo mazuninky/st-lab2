@@ -31,7 +31,8 @@ object ProgramFrameworkSpek : Spek({
                 input = sampleInput.toInputStream()
             }
 
-            When("run program") {
+
+            cWhen("run program") {
                 framework.run()
             }
 
@@ -42,7 +43,7 @@ object ProgramFrameworkSpek : Spek({
                 }
             }
 
-            Then("program process sampleInput: $sampleInput") {
+            cThen("program process sampleInput: $sampleInput") {
                 verify(launchProgramMock).process(sampleInput)
             }
         }
@@ -55,7 +56,7 @@ object ProgramFrameworkSpek : Spek({
                 input = sampleInputs.toInputStream()
             }
 
-            When("run program") {
+            cWhen("run program") {
                 framework.run()
             }
 
@@ -66,7 +67,7 @@ object ProgramFrameworkSpek : Spek({
                 }
             }
 
-            Then("program process sampleInputs: $sampleInputs") {
+            cThen("program process sampleInputs: $sampleInputs") {
                 argumentCaptor<String>().apply {
                     verify(launchProgramMock, times(2)).process(capture())
 
@@ -75,60 +76,6 @@ object ProgramFrameworkSpek : Spek({
             }
         }
     }
-
-//    Feature("Start a new program") {
-//        val newProgramMock: Program = mock {
-//            on { isWorking } doReturn false
-//        }
-//
-//        val launchProgramStub = object : Program {
-//            lateinit var context: Context
-//
-//            override fun create(context: Context) {
-//                this.context = context
-//            }
-//
-//            var startCount = 0
-//                private set
-//
-//            override fun start() {
-//                startCount++
-//            }
-//
-//            var stopCount = 0
-//                private set
-//
-//            override fun stop() {
-//                stopCount++
-//            }
-//
-//            var workingCount = 0
-//                private set
-//
-//            override val isWorking: Boolean =
-//                    workingCount++ == 0
-//
-//            override fun process(input: String) {
-//                context.startProgram(newProgramMock)
-//            }
-//        }
-//
-//        val input: InputStream = "lorem".toInputStream()
-//
-//        val framework by memoized(CachingMode.GROUP) {
-//            ProgramFramework(launchProgramStub, input)
-//        }
-//
-//        Scenario("Launch a new program") {
-//            When("run program") {
-//                framework.run()
-//            }
-//
-//            Then("") {
-//
-//            }
-//        }
-//    }
 })
 
 fun String.toInputStream(): InputStream {

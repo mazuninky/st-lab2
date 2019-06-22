@@ -1,19 +1,24 @@
 package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.program.Program
+import ru.ifmo.st.lab2.sl.Container
+import ru.ifmo.st.lab2.sl.InjectableContainer
+import ru.ifmo.st.lab2.sl.emptyContainer
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.io.StringBufferInputStream
 import java.util.*
 
-class ProgramFramework(startProgram: Program, private val input: InputStream = System.`in`) {
+class ProgramFramework(startProgram: Program,
+                       private val input: InputStream = System.`in`,
+                       container: InjectableContainer = emptyContainer) {
     private val programStack = Stack<Program>()
 
     private var currentProgram = startProgram
 
-    private val context = Context()
+    private val context = Context(container)
 
-    fun run() {
+    suspend fun run() {
         currentProgram.create(context)
         currentProgram.start()
 

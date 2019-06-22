@@ -10,4 +10,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":program"))
+    implementation(project(":sl"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 }

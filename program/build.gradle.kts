@@ -1,14 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.21")
+    id("org.jetbrains.kotlin.jvm").version("1.3.30")
 }
 
 val spek_version = "2.0.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation(kotlin("reflect"))
+
+    implementation(project(":sl"))
 
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation(kotlin("test"))

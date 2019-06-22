@@ -10,7 +10,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
 
-    testImplementation("com.natpryce:hamkrest:1.7.0.0")
+    testImplementation("org.amshove.kluent:kluent:1.49")
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spek_version")
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spek_version") {
         exclude(group = "org.jetbrains.kotlin")

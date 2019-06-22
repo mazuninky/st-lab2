@@ -6,7 +6,7 @@ interface Program {
     fun start()
     fun stop()
 
-    fun process(input: String)
+    suspend fun process(input: String)
 
     val isWorking: Boolean
 }

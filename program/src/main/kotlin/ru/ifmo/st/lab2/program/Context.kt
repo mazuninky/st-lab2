@@ -1,8 +1,10 @@
 package ru.ifmo.st.lab2.program
 
+import ru.ifmo.st.lab2.sl.Container
+import ru.ifmo.st.lab2.sl.InjectableContainer
 import kotlin.reflect.full.createInstance
 
-class Context {
+class Context(val container: InjectableContainer) {
     private val data = mutableMapOf<String, Any>()
 
     fun <T> setValue(key: String, value: Any) {

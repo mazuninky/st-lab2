@@ -4,5 +4,12 @@ import ru.ifmo.st.lab2.core.Task
 
 interface TaskDBGateway {
     fun addTask(task: Task)
+
+    fun addAll(tasks: List<Task>) {
+        tasks.forEach { addTask(it) }
+    }
+
     fun fetchTasks(): List<Task>
+
+    fun clear()
 }
