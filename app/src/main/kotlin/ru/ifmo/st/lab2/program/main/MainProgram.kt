@@ -2,6 +2,7 @@ package ru.ifmo.st.lab2.program.main
 
 import ru.ifmo.st.lab2.program.AddNewTaskProgram
 import ru.ifmo.st.lab2.program.BaseProgram
+import ru.ifmo.st.lab2.program.Program
 
 class MainProgram : BaseProgram() {
     companion object {
@@ -21,14 +22,18 @@ class MainProgram : BaseProgram() {
         //printHelp()
     }
 
-    override suspend  fun process(input: String) {
+    override suspend fun process(input: String) {
         val command = parseCommand(input.trim())
         when (command.name) {
-            ADD_TASK_COMMAND -> context.startProgram<AddNewTaskProgram>()
+            ADD_TASK_COMMAND -> context.startProgram(buildAddNewTaskProgram())
             FIND_TASK_COMMAND -> finish()
             LIST_TASK_COMMAND -> finish()
             EXIT_TASK_COMMAND -> finish()
         }
+    }
+
+    private fun buildAddNewTaskProgram(): Program {
+        return AddNewTaskProgram(context.inject())
     }
 
     private fun parseCommand(input: String): Command {

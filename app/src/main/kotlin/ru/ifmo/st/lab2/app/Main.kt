@@ -6,5 +6,6 @@ import ru.ifmo.st.lab2.program.ProgramFramework
 import ru.ifmo.st.lab2.program.main.MainProgram
 import ru.ifmo.st.lab2.sl.buildContainer
 
-suspend fun main() = ProgramFramework(MainProgram(), container = appContainer)
+suspend fun main() =
+        ProgramFramework(MainProgram(), container = appContainer)
         .run()

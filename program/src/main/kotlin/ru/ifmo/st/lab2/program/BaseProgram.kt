@@ -36,10 +36,16 @@ abstract class BaseProgram : Program {
     protected lateinit var context: Context
         private set
 
-    final override fun create(context: Context) {
+
+    protected lateinit var output: OutputHandler
+        private set
+
+    final override fun create(context: Context, output: OutputHandler) {
         if (state != State.PreInit) {
             throw IllegalProgramState()
         }
+
+        this.output = output
 
         this.context = context
         state = State.Created
@@ -61,6 +67,11 @@ abstract class BaseProgram : Program {
 
     protected fun onFinish() {
 
+    }
+
+
+    protected fun showMessage(message: String) {
+        output.showMessage(message)
     }
 }
 

@@ -6,11 +6,14 @@ import ru.ifmo.st.lab2.sl.InjectableContainer
 import ru.ifmo.st.lab2.sl.emptyContainer
 import java.io.BufferedInputStream
 import java.io.InputStream
+import java.io.OutputStream
 import java.io.StringBufferInputStream
 import java.util.*
 
 class ProgramFramework(startProgram: Program,
                        private val input: InputStream = System.`in`,
+                       private val output: OutputHandler = PrintHandler,
+                       private val pointer: String = "-> ",
                        container: InjectableContainer = emptyContainer) {
     private val programStack = Stack<Program>()
 
@@ -19,7 +22,7 @@ class ProgramFramework(startProgram: Program,
     private val context = Context(container)
 
     suspend fun run() {
-        currentProgram.create(context)
+        currentProgram.create(context, output)
         currentProgram.start()
 
         Scanner(input).use { scanner ->
@@ -35,6 +38,7 @@ class ProgramFramework(startProgram: Program,
                     continue
                 }
 
+                output.printPointer(pointer)
                 val value = scanner.nextLine()
                 currentProgram.process(value)
 
@@ -52,7 +56,7 @@ class ProgramFramework(startProgram: Program,
         currentProgram.stop()
         currentProgram = program
 
-        currentProgram.create(context)
+        currentProgram.create(context, output)
         currentProgram.start()
     }
 }

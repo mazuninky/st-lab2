@@ -16,6 +16,11 @@ class Context(val container: InjectableContainer) {
         return data[key] as T
     }
 
+    inline fun <reified T : Any> inject(): T {
+        return container.get(T::class)
+    }
+
+
     private val requests: MutableList<Request> = mutableListOf()
 
     fun startProgram(program: Program) {
