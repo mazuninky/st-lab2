@@ -50,6 +50,7 @@ object FindTaskByTagUseCaseSpek : Spek({
         }
 
         Scenario("use not empty tag list") {
+
             lateinit var result: List<Task>
             When("find tasks with empty tag list") {
                 result = useCase.find(tags)

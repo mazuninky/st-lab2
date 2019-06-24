@@ -1,11 +1,22 @@
 plugins {
     id("org.jetbrains.kotlin.jvm").version("1.3.21")
     id("org.liquibase.gradle").version("2.0.1")
+    id("org.flywaydb.flyway").version("5.2.4")
 }
 
 val spek_version = "2.0.2"
 
+flyway {
+    url = "jdbc:postgresql://localhost:5432/todo"
+    user = "todo"
+    password = "12345"
+    locations = arrayOf("/src/main/resources/db/migration")
+}
+
+
 dependencies {
+    compile("org.postgresql:postgresql:42.2.5")
+
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
 

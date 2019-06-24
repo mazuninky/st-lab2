@@ -7,6 +7,7 @@ import java.io.FileOutputStream
 import java.sql.Date
 import java.text.SimpleDateFormat
 
+@Deprecated("now use JDBCTaskDBGateway")
 class DiskTaskDBGateway(dbPath: String = defaultDBPath) : TaskDBGateway {
 
     private val dbFile = File(dbPath)
