@@ -3,6 +3,7 @@ package ru.ifmo.st.lab2.data.jdbc
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
+import java.sql.Statement
 
 //val isProd = System.getenv("PROD")?.toBoolean() ?: false
 
@@ -18,9 +19,9 @@ class DB {
         dataSource = source
     }
 
-    fun initScript() {
-
-    }
-
     val connection: Connection = dataSource.connection
+
+    inline fun <T> executeStatement(body: (Statement) -> T): T {
+        return connection.createStatement().use(body)
+    }
 }

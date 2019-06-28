@@ -7,7 +7,6 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
     private val connection = db.connection
 
     override fun addTask(task: Task) {
-
         if (task.id != null) {
             throw IllegalStateException()
         }
@@ -15,7 +14,7 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
         connection.createStatement().use { it.execute(query) }
     }
 
-    private fun List<String>.toSQLList() = joinToString(separator = ",") { "\"$it\"" }
+    private fun List<String>.toSQLList() = joinToString(separator = ",") { "'$it'" }
 
     override fun fetchTasks(): List<Task> {
         val tasks = mutableListOf<Task>()

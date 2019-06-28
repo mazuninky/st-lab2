@@ -62,6 +62,7 @@ class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : BaseProgram() 
                 tags = input.split(",").stream().map(String::trim).collect(Collectors.toList())
 
                 useCase.addNewTask(Task(name, description, dueDate, tags))
+                finish()
             }
         }
 

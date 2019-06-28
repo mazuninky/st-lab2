@@ -8,10 +8,14 @@ import ru.ifmo.st.lab2.data.jdbc.DB
 import ru.ifmo.st.lab2.data.jdbc.JDBCTaskDBGateway
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import java.io.File
+import java.sql.Connection
+import java.sql.SQLException
+import java.sql.Statement
 import java.util.*
 
 object TaskDBGatewayTest : Spek({
-    val gateway: TaskDBGateway by memoized { JDBCTaskDBGateway(DB()) }
+    val db = DB()
+    val gateway: TaskDBGateway by memoized { JDBCTaskDBGateway(db) }
 
     val sampleTask = Task("Sample task", "Kek", Calendar.getInstance().time, listOf("test", "sample"))
     val sampleTaskTwo = Task("Sample task 2", "Kek 2", Calendar.getInstance().time, listOf("test", "sample", "second"))
@@ -20,40 +24,89 @@ object TaskDBGatewayTest : Spek({
 
     Feature("DiskTaskDBGateway task adding") {
 
-        //        Scenario("Work with one task") {
-//            Given("empty db") {
-//                gateway.clear()
-//            }
-//
-//            When("Add sample task") {
-//                gateway.addTask(sampleTask)
-//            }
-//
-//            Then("db should be contains one task") {
-//                gateway.fetchTasks().size shouldEqual 1
-//            }
-//
-//            Then("db should be contains sample task") {
-//                gateway.fetchTasks().first() shouldEqual sampleTask
-//            }
-//        }
+        Scenario("Add task") {
+            Given("empty task table") {
+                db.executeStatement {
+                    it.execute("DELETE FROM task;")
+                }
+            }
 
-//        Scenario("Work with multiple tasks") {
-//            Given("empty db") {
-//                gateway.clear()
-//            }
-//
-//            When("add list of taks") {
-//                tasks.forEach { gateway.addTask(it) }
-//            }
-//
-//            Then("db should be contains ${tasks.size} tasks") {
-//                gateway.fetchTasks().size shouldEqual tasks.size
-//            }
-//
-//            Then("db should be contains list of tasks") {
-//                gateway.fetchTasks() shouldEqual tasks
-//            }
-//        }
+
+            When("add task") {
+                gateway.addTask(sampleTask)
+            }
+
+
+            Then("should add task to db") {
+                db.executeStatement {
+                    val result = it.executeQuery("SELECT * FROM task WHERE name = '${sampleTask.name}' AND description = '${sampleTask.description}';")
+                    result.next() shouldEqual true
+                }
+            }
+        }
+
+        Scenario("Get task") {
+            Given("empty task table") {
+                db.executeStatement {
+                    it.execute("DELETE FROM task; DELETE FROM tag;")
+                }
+            }
+
+
+            var insertedId: Long = 0
+
+            When("add task with sql statement") {
+                insertedId = db.connection.addTask(sampleTask)
+            }
+
+            When("add tags to task with sql statement") {
+                sampleTask.tags.forEach {
+                    val tagId = db.connection.addTag(it)
+                    db.connection.addTaskTagConnection(insertedId, tagId)
+                }
+            }
+
+
+            Then("should get only sample task for db") {
+                val tasks = gateway.fetchTasks()
+                tasks.size shouldEqual 1
+                val task = tasks.first()
+                task.name shouldEqual sampleTask.name
+                task.description shouldEqual sampleTask.description
+                task.tags shouldEqual sampleTask.tags
+            }
+        }
     }
 })
+
+
+fun Connection.addTask(task: Task): Long {
+    val sql = "INSERT INTO task VALUES (DEFAULT, '${task.name}', '${task.description}', '${task.dueData}');"
+    val preparedStatement = prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+    preparedStatement.executeUpdate()
+    val keys = preparedStatement.generatedKeys
+    return if (keys.next()) {
+        keys.getLong(1)
+    } else {
+        throw  SQLException("Creating user failed, no ID obtained.");
+    }
+}
+
+
+fun Connection.addTag(tag: String): Long {
+    val sql = "INSERT INTO tag VALUES (DEFAULT, '$tag');"
+    val preparedStatement = prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+    preparedStatement.executeUpdate()
+    val keys = preparedStatement.generatedKeys
+    return if (keys.next()) {
+        keys.getLong(1)
+    } else {
+        throw  SQLException("Creating user failed, no ID obtained.");
+    }
+}
+
+fun Connection.addTaskTagConnection(taskId: Long, tagId: Long) {
+    createStatement().use {
+        it.execute("INSERT INTO task_tag VALUES ($taskId, $tagId);")
+    }
+}

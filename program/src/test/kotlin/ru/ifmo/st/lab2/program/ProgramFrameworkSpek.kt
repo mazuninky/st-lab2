@@ -38,7 +38,7 @@ object ProgramFrameworkSpek : Spek({
 
             Then("program runs with lifecycle events") {
                 inOrder(launchProgramMock) {
-                    verify(launchProgramMock).create(any())
+                    verify(launchProgramMock).create(any(), PrintHandler)
                     verify(launchProgramMock).start()
                 }
             }
@@ -62,7 +62,7 @@ object ProgramFrameworkSpek : Spek({
 
             Then("program runs with lifecycle events") {
                 inOrder(launchProgramMock) {
-                    verify(launchProgramMock).create(any())
+                    verify(launchProgramMock).create(any(), PrintHandler)
                     verify(launchProgramMock).start()
                 }
             }
