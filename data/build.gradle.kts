@@ -17,7 +17,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
 
-    implementation("com.oracle.jdbc:ojdbc8:18.3.0.0")
+    implementation("com.oracle.jdbc:ojdbc8:19.3.0.0")
     implementation("com.h2database:h2:1.4.199")
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.zaxxer:HikariCP:3.3.1")

@@ -11,5 +11,8 @@ subprojects {
         mavenLocal()
         jcenter()
         mavenCentral()
+        maven {
+            url = uri("http://maven.icm.edu.pl/artifactory/repo/")
+        }
     }
 }
