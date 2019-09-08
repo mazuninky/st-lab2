@@ -1,7 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.21")
+    kotlin("jvm").version("1.3.50")
+    application
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 dependencies {
@@ -13,4 +18,9 @@ dependencies {
     implementation(project(":sl"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":state"))
+}
+
+application {
+    mainClassName = "ru.ifmo.st.lab2.app.MainKt"
 }

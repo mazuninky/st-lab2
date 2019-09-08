@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("org.jetbrains.kotlin.jvm").version("1.3.21")
     id("org.flywaydb.flyway").version("5.2.4")
@@ -9,6 +11,10 @@ flyway {
     url = "jdbc:postgresql://localhost:5432/todo"
     user = "todo"
     password = "12345"
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 dependencies {
