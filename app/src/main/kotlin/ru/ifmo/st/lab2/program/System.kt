@@ -1,6 +1,6 @@
-package ru.ifmo.st.lab2.program.main
+package ru.ifmo.st.lab2.program
 
-import ru.ifmo.st.lab2.program.Context
+import ru.ifmo.st.lab2.program.main.Command
 
 const val TASK_ARGS_KEY = "args"
 

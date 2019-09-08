@@ -2,7 +2,13 @@ package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.sl.Container
 import ru.ifmo.st.lab2.sl.InjectableContainer
+import ru.ifmo.st.lab2.sl.get
+import kotlin.reflect.KParameter
+import kotlin.reflect.full.cast
 import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.valueParameters
+import kotlin.reflect.jvm.jvmErasure
 
 class Context(val container: InjectableContainer) {
     private val data = mutableMapOf<String, Any>()
@@ -53,7 +59,15 @@ class Context(val container: InjectableContainer) {
     }
 
     inline fun <reified T : Program> startProgram() {
-        startProgram(T::class.createInstance())
+        val constructor = T::class.primaryConstructor!!
+        if (constructor.parameters.isEmpty())
+            startProgram(T::class.createInstance())
+        else {
+            val args = constructor.valueParameters.map {
+                container.get(it.type.jvmErasure)
+            }
+            startProgram(constructor.call(*args.toTypedArray()))
+        }
     }
 
 

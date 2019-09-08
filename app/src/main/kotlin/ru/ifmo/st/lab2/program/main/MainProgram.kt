@@ -21,18 +21,18 @@ class MainProgram : BaseProgram() {
     override fun onCreate() {
         println(CREATE_MESSAGE)
         val helpParser = CSVParser("help.csv")
-        context.setValue(HelpTaskProgram.HELP_MAP_KEY, helpParser.parse())
+        context.setValue(HelpProgram.HELP_MAP_KEY, helpParser.parse())
     }
 
     override suspend fun process(input: String) {
         val command = parseCommand(input.trim())
 
         when (command.name) {
-            ADD_TASK_COMMAND -> context.startProgram(buildAddNewTaskProgram())
+            ADD_TASK_COMMAND -> context.startProgram<AddNewTaskProgram>()
             FIND_TASK_COMMAND -> finish()
-            LIST_TASK_COMMAND -> context.startProgram(buildFetchNActualTaskProgram())
+            LIST_TASK_COMMAND -> context.startProgram<ListTaskProgram>()
             EXIT_TASK_COMMAND -> finish()
-            HELP_TASK_COMMAND -> context.startProgram<HelpTaskProgram>()
+            HELP_TASK_COMMAND -> context.startProgram<HelpProgram>()
             else -> {
                 showMessage(UNKNOWN_COMMAND)
                 return
@@ -40,14 +40,6 @@ class MainProgram : BaseProgram() {
         }
 
         context.setTaskArgs(command)
-    }
-
-    private fun buildAddNewTaskProgram(): Program {
-        return AddNewTaskProgram(context.inject())
-    }
-
-    private fun buildFetchNActualTaskProgram(): Program {
-        return FetchNActuallTaskProgram(context.inject())
     }
 
     private fun parseCommand(input: String): Command {

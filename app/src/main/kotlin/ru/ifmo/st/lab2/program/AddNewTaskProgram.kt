@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
 
-
 class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : StateBaseProgram<AddNewTaskProgram.ProgramStage>() {
     sealed class ProgramStage {
         object EnterName : ProgramStage()

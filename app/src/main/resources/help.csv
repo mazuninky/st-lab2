@@ -1,2 +1,5 @@
 command;description
 help;help <name>\nВыводит справку по команде help
+add;add\nСоздаёт задачу\nadd '<name>' '<desc>' '<date>' '<tag1>,<tag2>'\nСоздаёт задачу из входных параметров
+list;list\nВыводит список задач\nlist <n>\nВыводит n первых задач
+actual;actual\nВыводит список актуальных задач\nlist <n>\nВыводит n первых актуальных задач

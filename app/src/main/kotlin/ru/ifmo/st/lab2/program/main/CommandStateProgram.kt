@@ -1,6 +1,7 @@
 package ru.ifmo.st.lab2.program.main
 
 import ru.ifmo.st.lab2.program.BaseProgram
+import ru.ifmo.st.lab2.program.TASK_ARGS_KEY
 import ru.ifmo.st.lab2.state.StateMachine
 
 abstract class CommandStateProgram<State : Any> : BaseProgram() {
