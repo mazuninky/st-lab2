@@ -12,4 +12,6 @@ val domainModule = buildContainer {
 
     factory<FetchTaskUseCase> { FetchTaskUseCaseImpl(get()) }
     factory<FetchNTaskUseCase> { FetchNTaskUseCaseImpl(get()) }
+
+    factory<ExportDBUseCase> { ExportDBUseCaseImpl(get(), get(), get()) }
 }

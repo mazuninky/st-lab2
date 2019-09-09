@@ -7,14 +7,12 @@ class MainProgram : BaseProgram() {
         private const val ADD_TASK_COMMAND = "add"
         private const val FIND_TASK_COMMAND = "find"
         private const val LIST_TASK_COMMAND = "list"
+        private const val ACTUAL_TASK_COMMAND = "actual"
+        private const val EXPORT_TASK_COMMAND = "export"
         private const val EXIT_TASK_COMMAND = "exit"
         private const val HELP_TASK_COMMAND = "help"
         private const val UNKNOWN_COMMAND = "Неизвестная команда"
         private const val CREATE_MESSAGE = "TO-DO List"
-//                "1. Добавление новой задачи\n" +
-//                "2. Поиск задачи по тэгам\n" +
-//                "3. Вывод N наиболее актуальных задач\n" +
-//                "4. Выход из программы"
     }
 
 
@@ -33,6 +31,8 @@ class MainProgram : BaseProgram() {
             LIST_TASK_COMMAND -> context.startProgram<ListTaskProgram>()
             EXIT_TASK_COMMAND -> finish()
             HELP_TASK_COMMAND -> context.startProgram<HelpProgram>()
+            EXPORT_TASK_COMMAND -> context.startProgram<ExportProgram>()
+            ACTUAL_TASK_COMMAND -> context.startProgram<ActualListTaskProgram>()
             else -> {
                 showMessage(UNKNOWN_COMMAND)
                 return

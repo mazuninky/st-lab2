@@ -12,9 +12,9 @@ class HelpProgram : CommandProgram() {
     override fun afterStart() {
         val commandMap = context.getValue<Map<String, String>>(HELP_MAP_KEY)
 
-        if (args.isEmpty()) {
+        if (args.isEmpty())
             showMessage("Доступные команды: ${commandMap.keys.joinToString(", ")}")
-        } else {
+        else {
             val commandName = args.first()
             if (!commandMap.contains(commandName)) {
                 showMessage("Неверное название команды")

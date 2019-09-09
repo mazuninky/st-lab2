@@ -1,8 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.21")
-    id("org.flywaydb.flyway").version("5.2.4")
+    id("org.jetbrains.kotlin.jvm").version("1.3.50")
+    id("org.flywaydb.flyway").version("6.0.2")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.3.50"
 }
 
 val spek_version = "2.0.2"
@@ -35,6 +36,8 @@ dependencies {
         exclude(group = "org.junit.platform")
     }
     testRuntimeOnly(kotlin("reflect"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.12.0")
 }
 
 tasks.withType<Test> {
