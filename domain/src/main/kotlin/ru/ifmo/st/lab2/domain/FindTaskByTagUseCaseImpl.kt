@@ -4,7 +4,7 @@ import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 
 class FindTaskByTagUseCaseImpl(private val taskDBGateway: TaskDBGateway) : FindTaskByTagUseCase {
-    override fun find(tags: List<String>): List<Task> {
+    override operator fun invoke(tags: List<String>): List<Task> {
         if (tags.isEmpty())
             return emptyList()
 

@@ -6,12 +6,12 @@ import java.lang.IllegalArgumentException
 import java.util.*
 
 class FetchNActualTaskUseCaseImpl(private val useCase: FetchActualTaskUseCase) : FetchNActualTaskUseCase {
-    override fun fetch(limit: Int): List<Task> {
+    override operator fun invoke(limit: Int): List<Task> {
         check(limit > 0)
 
         if (limit == 0)
             return emptyList()
 
-        return useCase.fetch().take(limit)
+        return useCase().take(limit)
     }
 }

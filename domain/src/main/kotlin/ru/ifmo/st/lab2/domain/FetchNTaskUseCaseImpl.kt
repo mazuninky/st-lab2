@@ -5,13 +5,13 @@ import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import java.util.*
 
 class FetchNTaskUseCaseImpl(private val useCase: FetchTaskUseCase) : FetchNTaskUseCase {
-    override fun fetch(limit: Int): List<Task> {
+    override operator fun invoke(limit: Int): List<Task> {
         check(limit > 0)
 
         if (limit == 0)
             return emptyList()
 
-        return useCase.fetch()
+        return useCase()
                 .take(limit)
     }
 }

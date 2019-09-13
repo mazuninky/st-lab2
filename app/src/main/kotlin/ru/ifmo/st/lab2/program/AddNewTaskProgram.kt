@@ -54,7 +54,7 @@ class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : StateBaseProgr
             tags = input.split(",")
                     .map(String::trim)
 
-            useCase.addNewTask(Task(name, description, dueDate, tags))
+            useCase(Task(name, description, dueDate, tags))
             finish()
         }
     }

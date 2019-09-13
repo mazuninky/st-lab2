@@ -10,7 +10,7 @@ class ExportDBUseCaseImpl(
         private val taskDBUGateway: TaskDBGateway
 ) : ExportDBUseCase {
 
-    override  fun export(fileName: String) {
+    override operator fun invoke(fileName: String) {
         val tasks = taskDBUGateway.fetchTasks()
         val data = exportGateway.export(tasks)
         ioGateway.writeToFile(fileName, data)

@@ -19,7 +19,7 @@ class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
     override fun afterStart() {
         val tasks: List<Task>
         tasks = if (args.isEmpty()) {
-            fetchTaskUseCase.fetch()
+            fetchTaskUseCase()
         } else {
             val n = args.first().toInt()
 
@@ -28,7 +28,7 @@ class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
                 return
             }
 
-            fetchNTaskUseCase.fetch(n)
+            fetchNTaskUseCase(n)
         }
 
         tasks.map(Task::toView).forEach(this::showMessage)

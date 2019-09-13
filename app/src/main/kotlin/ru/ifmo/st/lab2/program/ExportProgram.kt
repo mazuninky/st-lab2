@@ -10,7 +10,7 @@ class ExportProgram(private val useCase: ExportDBUseCase) : CommandProgram() {
         if (args.first().isBlank()) {
             showMessage("Имя файла не может быть пустым!")
         } else {
-            useCase.export(args.first())
+            useCase(args.first())
         }
         finish()
     }

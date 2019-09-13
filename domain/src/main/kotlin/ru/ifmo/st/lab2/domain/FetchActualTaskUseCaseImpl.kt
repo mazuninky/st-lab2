@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 import java.util.*
 
 class FetchActualTaskUseCaseImpl(private val taskDBGateway: TaskDBGateway) : FetchActualTaskUseCase {
-    override fun fetch(): List<Task> {
+    override operator fun invoke(): List<Task> {
         val tasks = taskDBGateway.fetchTasks()
         val today = Calendar.getInstance().time
         return tasks
