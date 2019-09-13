@@ -33,6 +33,23 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
         return tasks
     }
 
+    override fun containsTask(id: Long): Boolean {
+//        val query = "SELECT * FROM task WHERE id = $id LIMIT 1;"
+//        val isExits
+//        connection.createStatement().use {
+//            val result = it.executeQuery(query)
+//            isExits = result.next()
+//        }
+//        return isExits
+        val query = "SELECT * FROM task WHERE id = $id LIMIT 1;"
+        var isExits = false
+        connection.createStatement().use {
+            val result = it.executeQuery(query)
+            isExits = result.next()
+        }
+        return isExits
+    }
+
     override fun clear() {
         val query = "DELETE FROM task; DELETE FROM tag;"
         connection.createStatement().use {
