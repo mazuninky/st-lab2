@@ -2,9 +2,10 @@ package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.domain.SearchTasksByTagsUseCase
+import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 import ru.ifmo.st.lab2.program.main.CommandProgram
 
-class SearchTaskProgram(private val search: SearchTasksByTagsUseCase) : CommandProgram() {
+class SearchTaskProgram(private val search: SearchTasksByTagsUseCase) : ArgumentCommandProgram() {
 
     override fun validateArgs(args: List<String>) = args.isNotEmpty()
 
@@ -21,9 +22,5 @@ class SearchTaskProgram(private val search: SearchTasksByTagsUseCase) : CommandP
                     .forEach(this::showMessage)
         }
         finish()
-    }
-
-    override suspend fun process(input: String) {
-
     }
 }

@@ -4,12 +4,13 @@ import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.domain.FetchNActualTaskUseCase
 import ru.ifmo.st.lab2.domain.FetchNTaskUseCase
 import ru.ifmo.st.lab2.domain.FetchTaskUseCase
+import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 import ru.ifmo.st.lab2.program.main.CommandProgram
 import java.lang.NumberFormatException
 import java.lang.StringBuilder
 
 class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
-                      private val fetchNTask: FetchNTaskUseCase) : CommandProgram() {
+                      private val fetchNTask: FetchNTaskUseCase) : ArgumentCommandProgram() {
     companion object {
         const val ErrorMessage = "Ожидалось положительное число"
     }
@@ -39,10 +40,5 @@ class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
         tasks.map(Task::toView).forEach(this::showMessage)
 
         finish()
-    }
-
-
-    override suspend fun process(input: String) {
-
     }
 }

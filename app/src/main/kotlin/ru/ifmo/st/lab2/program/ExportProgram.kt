@@ -1,9 +1,10 @@
 package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.domain.ExportDBUseCase
+import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 import ru.ifmo.st.lab2.program.main.CommandProgram
 
-class ExportProgram(private val export: ExportDBUseCase) : CommandProgram() {
+class ExportProgram(private val export: ExportDBUseCase) : ArgumentCommandProgram() {
     override fun validateArgs(args: List<String>) = args.size == 1
 
     override fun afterStart() {
@@ -13,9 +14,5 @@ class ExportProgram(private val export: ExportDBUseCase) : CommandProgram() {
             export(args.first())
         }
         finish()
-    }
-
-    override suspend fun process(input: String) {
-
     }
 }

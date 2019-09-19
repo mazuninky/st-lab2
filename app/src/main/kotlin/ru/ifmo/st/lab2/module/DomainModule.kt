@@ -21,4 +21,5 @@ val domainModule = buildContainer {
     factory<DeleteTaskUseCase> { DeleteTaskUseCaseImpl(get()) }
     factory<FetchTagsUseCase> { FetchTagsUseCaseImpl(get()) }
     factory<SearchTasksByTagsUseCase> { SearchTasksByTagsUseCaseImpl(get()) }
+    factory<DoneTaskUseCase> { DoneTaskUseCaseImpl(get()) }
 }

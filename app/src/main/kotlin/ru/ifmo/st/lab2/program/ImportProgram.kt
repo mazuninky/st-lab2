@@ -2,9 +2,10 @@ package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.domain.ImportDBUseCase
 import ru.ifmo.st.lab2.domain.ImportStrategy
+import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 import ru.ifmo.st.lab2.program.main.CommandProgram
 
-class ImportProgram(private val import: ImportDBUseCase) : CommandProgram() {
+class ImportProgram(private val import: ImportDBUseCase) : ArgumentCommandProgram() {
     companion object {
         const val ADD_STRATEGY = "add"
         const val ACCEPT_OWN_STRATEGY = "own"
@@ -34,7 +35,4 @@ class ImportProgram(private val import: ImportDBUseCase) : CommandProgram() {
         finish()
     }
 
-    override suspend fun process(input: String) {
-
-    }
 }

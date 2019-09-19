@@ -1,6 +1,7 @@
 package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.core.Task
+import ru.ifmo.st.lab2.core.TaskState
 import ru.ifmo.st.lab2.domain.AddNewTaskUseCase
 import ru.ifmo.st.lab2.domain.FindTaskByIdOrNameUseCase
 import ru.ifmo.st.lab2.domain.UpdateTaskUseCase
@@ -61,6 +62,20 @@ class EditTaskProgram(private val update: UpdateTaskUseCase, private val findByI
             }
 
             when (split.first()) {
+                "state" -> {
+                    val state = when (split.second()) {
+                        "backlog" -> TaskState.Backlog
+                        "working" -> TaskState.InProgress
+                        "done" -> TaskState.Done
+                        else -> null
+                    }
+
+                    if (state == null) {
+                        showMessage("Неверное название состояния!")
+                    } else {
+                        task.state = state
+                    }
+                }
                 "name" -> {
                     task.name = split.subList(1, split.size).joinToString(separator = " ")
                 }
