@@ -12,7 +12,6 @@ val spek_version = "2.0.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation(kotlin("reflect"))
 
     implementation(project(":sl"))

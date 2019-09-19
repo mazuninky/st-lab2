@@ -18,7 +18,7 @@ abstract class StateBaseProgram<State : Any> : BaseProgram() {
 
     }
 
-    final override suspend fun process(input: String) {
+    final override fun process(input: String) {
         machine.handle(input)
     }
 }

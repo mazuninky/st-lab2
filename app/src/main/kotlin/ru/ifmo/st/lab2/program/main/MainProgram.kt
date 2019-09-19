@@ -28,7 +28,7 @@ class MainProgram : BaseProgram() {
         context.setValue(HelpProgram.HELP_MAP_KEY, helpParser.parse())
     }
 
-    override suspend fun process(input: String) {
+    override fun process(input: String) {
         val command = parseCommand(input.trim())
 
         when (command.name) {

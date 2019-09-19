@@ -1,8 +1,9 @@
 package ru.ifmo.st.lab2.program
 
+import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 import ru.ifmo.st.lab2.program.main.CommandProgram
 
-class HelpProgram : CommandProgram() {
+class HelpProgram : ArgumentCommandProgram() {
     companion object {
         const val HELP_MAP_KEY = "help_map"
     }
@@ -24,9 +25,5 @@ class HelpProgram : CommandProgram() {
         }
 
         finish()
-    }
-
-    override suspend fun process(input: String) {
-
     }
 }

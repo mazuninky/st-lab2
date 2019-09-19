@@ -21,7 +21,7 @@ class ProgramFramework(startProgram: Program,
 
     private val context = Context(container)
 
-    suspend fun run() {
+    fun run() {
         currentProgram.create(context, output)
         currentProgram.start()
 

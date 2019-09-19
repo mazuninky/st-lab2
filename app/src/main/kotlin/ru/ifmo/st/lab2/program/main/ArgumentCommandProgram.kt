@@ -35,7 +35,7 @@ abstract class ArgumentCommandProgram : BaseProgram() {
         return true
     }
 
-    final override suspend fun process(input: String) {
+    final override fun process(input: String) {
 
     }
 
