@@ -13,6 +13,7 @@ class MainProgram : BaseProgram() {
         private const val HELP_TASK_COMMAND = "help"
         private const val EDIT_TASK_COMMAND = "edit"
         private const val DELETE_TASK_COMMAND = "delete"
+        private const val TAG_COMMAND = "tag"
         private const val UNKNOWN_COMMAND = "Неизвестная команда"
         private const val CREATE_MESSAGE = "TO-DO List"
     }
@@ -37,6 +38,7 @@ class MainProgram : BaseProgram() {
             ACTUAL_TASK_COMMAND -> context.startProgram<ActualListTaskProgram>()
             EDIT_TASK_COMMAND -> context.startProgram<EditTaskProgram>()
             DELETE_TASK_COMMAND -> context.startProgram<DeleteTaskProgram>()
+            TAG_COMMAND -> context.startProgram<FetchTagsProgram>()
             else -> {
                 showMessage(UNKNOWN_COMMAND)
                 return

@@ -95,4 +95,18 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
             it.execute(query)
         }
     }
+
+
+    override fun fetchTags(): List<String> {
+        val tags = mutableListOf<String>()
+        val query = "SELECT text FROM tag;"
+        connection.createStatement().use {
+            val resultSet = it.executeQuery(query)
+            while (resultSet.next()) {
+                tags.add(resultSet.getString("text"))
+            }
+        }
+
+        return tags
+    }
 }
