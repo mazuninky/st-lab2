@@ -77,6 +77,9 @@ class EditTaskProgram(private val update: UpdateTaskUseCase, private val findByI
                 }
                 "tags" -> {
                     task.tags = split.subList(1, split.size)
+                            .joinToString(" ")
+                            .split(",")
+                            .map(String::trim)
                 }
 
 

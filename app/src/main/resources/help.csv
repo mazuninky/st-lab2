@@ -8,3 +8,4 @@ import;import <file> [strategy]\nИмпортирует базу данных и
 edit;edit\nРедактирует задачу
 delete;delete <id_or_name>\nУдаляет задачу с данным именем или id
 tags;tags\nВыводит списко всех тегов
+search;search <tags>\nНаходит все задания, которые имеют хотя бы один тег из <tags>

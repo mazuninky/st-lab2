@@ -21,5 +21,7 @@ interface TaskDBGateway {
 
     fun fetchTags(): List<String>
 
+    fun findTasksByTags(tags: List<String>): List<Task>
+
     fun clear()
 }

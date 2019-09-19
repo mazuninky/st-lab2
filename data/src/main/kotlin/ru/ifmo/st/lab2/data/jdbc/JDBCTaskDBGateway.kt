@@ -109,4 +109,17 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
 
         return tags
     }
+
+    override fun findTasksByTags(tags: List<String>): List<Task> {
+        val tasks = mutableListOf<Task>()
+        val query = "SELECT * FROM tag NATURAL JOIN task_tag NATURAL JOIN task WHERE tag.text in (${tags.toSQLList()});"
+        connection.createStatement().use {
+            val resultSet = it.executeQuery(query)
+            while (resultSet.next()) {
+                tasks.add(resultSet.fetchTask())
+            }
+        }
+
+        return tasks
+    }
 }
