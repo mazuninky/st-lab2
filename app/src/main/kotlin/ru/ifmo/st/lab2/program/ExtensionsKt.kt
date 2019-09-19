@@ -1,10 +1,9 @@
 package ru.ifmo.st.lab2.program
 
-import java.lang.Exception
-import java.security.CodeSource
 import java.text.DateFormat
-import java.text.ParseException
 import java.util.*
+import kotlin.NoSuchElementException
+
 
 fun DateFormat.parseOrNull(source: String): Date? {
     return try {
@@ -12,4 +11,11 @@ fun DateFormat.parseOrNull(source: String): Date? {
     } catch (e: Exception) {
         null
     }
+}
+
+
+fun <T> List<T>.second(): T {
+    if (isEmpty())
+        throw NoSuchElementException("List is empty.")
+    return this[1]
 }

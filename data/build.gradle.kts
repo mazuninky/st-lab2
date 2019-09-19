@@ -18,11 +18,16 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+val ktor_version: String by project
+
 dependencies {
     compile("org.postgresql:postgresql:42.2.5")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
+
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
 
     implementation("com.oracle.jdbc:ojdbc8:19.3.0.0")
     implementation("com.h2database:h2:1.4.199")

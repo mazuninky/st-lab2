@@ -22,12 +22,6 @@ class EditTaskProgram(private val update: UpdateTaskUseCase,
 
     private lateinit var task: Task
 
-    private fun <T> List<T>.second(): T {
-        if (isEmpty())
-            throw NoSuchElementException("List is empty.")
-        return this[1]
-    }
-
     override fun defineMachine() = StateMachine.create<ProgramState> {
         setInitialState(ProgramState.EnterNameOrId)
         state(ProgramState.EnterNameOrId) {

@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core"))
 
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     testImplementation(kotlin("test"))
 
     testImplementation("org.amshove.kluent:kluent:1.49")

@@ -28,27 +28,11 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        //        get("/") {
-//            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-//        }
-
         authenticate("myBasicAuth") {
-           get("user") {
-               call.respondText("hello")
-           }
-
-            post("sync") {
-
+            get("user") {
+                call.respondText("Success", , contentType = ContentType.Text.Plain)
             }
-//            get("/protected/route/basic") {
-//                val principal = call.principal<UserIdPrincipal>()!!
-//                call.respondText("Hello ${principal.name}")
-//            }
         }
-
-//        get("/json/jackson") {
-//            call.respond(mapOf("hello" to "world"))
-//        }
     }
 }
 

@@ -11,3 +11,4 @@ tags;tags\nВыводит списко всех тегов
 search;search <tags>\nНаходит все задания, которые имеют хотя бы один тег из <tags>
 done;done <id_or_name>\nЗавершает задачу с данным именем или id
 overdue;overdue\nВыводит список просроченных заданий
+login;login <username> <password>\nВыполняет вход на сервер
