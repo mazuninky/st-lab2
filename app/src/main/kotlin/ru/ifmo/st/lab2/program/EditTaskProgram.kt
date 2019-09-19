@@ -12,7 +12,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditTaskProgram(private val update: UpdateTaskUseCase, private val findByIdOrName: FindTaskByIdOrNameUseCase) : StateBaseProgram<EditTaskProgram.ProgramState>() {
+class EditTaskProgram(private val update: UpdateTaskUseCase,
+                      private val findByIdOrName: FindTaskByIdOrNameUseCase
+) : StateBaseProgram<EditTaskProgram.ProgramState>() {
     sealed class ProgramState {
         object EnterNameOrId : ProgramState()
         object EnterChange : ProgramState()

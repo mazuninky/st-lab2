@@ -1,6 +1,7 @@
 package ru.ifmo.st.lab2.module
 
 import ru.ifmo.st.lab2.domain.*
+import ru.ifmo.st.lab2.domain.fetch.*
 import ru.ifmo.st.lab2.sl.buildContainer
 import ru.ifmo.st.lab2.sl.get
 
@@ -22,4 +23,5 @@ val domainModule = buildContainer {
     factory<FetchTagsUseCase> { FetchTagsUseCaseImpl(get()) }
     factory<SearchTasksByTagsUseCase> { SearchTasksByTagsUseCaseImpl(get()) }
     factory<DoneTaskUseCase> { DoneTaskUseCaseImpl(get()) }
+    factory<FetchOverdueTaskUseCase> { FetchOverdueTaskUseCaseImpl(get()) }
 }

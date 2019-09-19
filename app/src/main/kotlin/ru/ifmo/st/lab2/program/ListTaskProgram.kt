@@ -37,7 +37,12 @@ class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
             fetchNTask(n)
         }
 
-        tasks.map(Task::toView).forEach(this::showMessage)
+        if (tasks.isEmpty()) {
+            showMessage("Нет заданий")
+        } else {
+            showMessage("Задания: ")
+            tasks.map(Task::toView).forEach(this::showMessage)
+        }
 
         finish()
     }

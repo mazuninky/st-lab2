@@ -23,3 +23,10 @@ fun Task.toView(): String {
     }
     return stringBuilder.toString()
 }
+
+private const val redColor: String = "\u001B[31m"
+private const val resetColor: String = "\u001B[0m"
+
+fun String.redColored(): String {
+    return "${redColor}this$resetColor"
+}

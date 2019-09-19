@@ -8,6 +8,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.style.gherkin.Feature
 import ru.ifmo.st.lab2.core.Task
+import ru.ifmo.st.lab2.domain.fetch.FetchNActualTaskUseCaseImpl
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import java.util.*
 import kotlin.test.assertEquals
