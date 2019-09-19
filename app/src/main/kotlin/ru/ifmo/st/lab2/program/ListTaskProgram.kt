@@ -43,7 +43,5 @@ class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
             showMessage("Задания: ")
             tasks.map(Task::toView).forEach(this::showMessage)
         }
-
-        finish()
     }
 }

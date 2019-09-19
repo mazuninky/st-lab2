@@ -32,7 +32,6 @@ class ImportProgram(private val import: ImportDBUseCase) : ArgumentCommandProgra
 
             import(args.first(), strategy)
         }
-        finish()
     }
 
 }

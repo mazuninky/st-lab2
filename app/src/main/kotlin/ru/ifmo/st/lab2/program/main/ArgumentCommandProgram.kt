@@ -25,6 +25,7 @@ abstract class ArgumentCommandProgram : BaseProgram() {
         }
 
         afterStart()
+        finish()
     }
 
     protected open fun afterStart() {

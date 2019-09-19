@@ -19,7 +19,5 @@ class DeleteTaskProgram(private val findTaskByIdOrName: FindTaskByIdOrNameUseCas
         } else {
             deleteTask(task)
         }
-
-        finish()
     }
 }

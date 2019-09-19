@@ -30,7 +30,7 @@ fun Application.module(testing: Boolean = false) {
     routing {
         authenticate("myBasicAuth") {
             get("user") {
-                call.respondText("Success", , contentType = ContentType.Text.Plain)
+                call.respondText("Success", contentType = ContentType.Text.Plain)
             }
         }
     }

@@ -14,7 +14,6 @@ class LoginProgram(private val login: LoginUseCase) : ArgumentCommandProgram() {
         } else {
             showMessage("Неверный пароль или логин")
         }
-        finish()
     }
 
 }

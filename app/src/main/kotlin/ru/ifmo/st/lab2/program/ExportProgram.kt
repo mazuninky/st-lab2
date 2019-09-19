@@ -13,6 +13,5 @@ class ExportProgram(private val export: ExportDBUseCase) : ArgumentCommandProgra
         } else {
             export(args.first())
         }
-        finish()
     }
 }

@@ -23,7 +23,5 @@ class ListOverdueTaskProgram(private val fetchOverdueTasks: FetchOverdueTaskUseC
             showMessage("Просроченные задания: ")
             tasks.map(Task::toView).forEach(this::showMessage)
         }
-
-        finish()
     }
 }

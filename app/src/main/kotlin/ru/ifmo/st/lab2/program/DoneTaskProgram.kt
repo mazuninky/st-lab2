@@ -22,7 +22,6 @@ class DoneTaskProgram(private val findTaskByIdOrName: FindTaskByIdOrNameUseCase,
                 deleteTask(task)
         }
 
-        finish()
     }
 
 }

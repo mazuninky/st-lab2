@@ -14,6 +14,5 @@ class FetchTagsProgram(private val fetchTags: FetchTagsUseCase) : ArgumentComman
     override fun afterStart() {
         showMessage("Тэги: ")
         showMessage(fetchTags().joinToString(", "))
-        finish()
     }
 }

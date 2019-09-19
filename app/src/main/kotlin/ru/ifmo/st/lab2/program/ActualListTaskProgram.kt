@@ -39,7 +39,5 @@ class ActualListTaskProgram(private val fetchActualTasks: FetchActualTaskUseCase
         }
 
         tasks.map(Task::toView).forEach(this::showMessage)
-
-        finish()
     }
 }

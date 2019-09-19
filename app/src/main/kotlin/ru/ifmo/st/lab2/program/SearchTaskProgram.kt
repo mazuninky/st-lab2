@@ -11,16 +11,15 @@ class SearchTaskProgram(private val search: SearchTasksByTagsUseCase) : Argument
 
     override fun afterStart() {
         val tags = args.joinToString(" ")
-                .split(",")
+            .split(",")
 
         val tasks = search(tags.toList())
         if (tasks.isEmpty()) {
             showMessage("Заданий не найдено")
         } else {
             tasks
-                    .map(Task::toView)
-                    .forEach(this::showMessage)
+                .map(Task::toView)
+                .forEach(this::showMessage)
         }
-        finish()
     }
 }

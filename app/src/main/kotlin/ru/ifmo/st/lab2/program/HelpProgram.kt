@@ -23,7 +23,5 @@ class HelpProgram : ArgumentCommandProgram() {
             }
             showMessage(commandMap.getValue(commandName))
         }
-
-        finish()
     }
 }
