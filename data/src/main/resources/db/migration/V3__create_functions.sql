@@ -16,8 +16,7 @@ END
 $$
     LANGUAGE plpgsql;
 
-CREATE FUNCTION add_tag_to_task(task_id bigint, tags varchar[])
-    RETURNS INT AS
+CREATE PROCEDURE add_tags_to_task(to_task_id bigint, tags varchar[]) AS
 $$
 DECLARE
     tag_item      varchar := null;
@@ -26,7 +25,7 @@ BEGIN
     FOREACH tag_item IN ARRAY tags
         loop
             tag_insert_id := add_tag(tag_item);
-            INSERT into task_tag VALUES (task_id, tag_insert_id);
+            INSERT into task_tag VALUES (to_task_id, tag_insert_id);
         end loop;
 END
 $$

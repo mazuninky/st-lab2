@@ -65,7 +65,7 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
     override fun update(task: Task) {
         val updateQuery = "UPDATE task SET name = '${task.name}', description = '${task.description}', due_date = '${task.dueData}' WHERE id = ${task.id};"
         val deleteTagsQuery = "DELETE FROM task_tag WHERE task_id = ${task.id};"
-        val tagQuery = "SELECT add_tag_to_task('${task.id}', ARRAY[${task.tags.toSQLList()}]);"
+        val tagQuery = "SELECT add_tags_to_task('${task.id}', ARRAY[${task.tags.toSQLList()}]);"
         connection.createStatement().use {
             it.execute(updateQuery)
             it.execute(deleteTagsQuery)
@@ -87,5 +87,12 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
         }
 
         return task
+    }
+
+    override fun deleteTask(task: Task) {
+        val query = "DELETE FROM task WHERE id = ${task.id};"
+        connection.createStatement().use {
+            it.execute(query)
+        }
     }
 }

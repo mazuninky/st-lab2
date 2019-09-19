@@ -1,7 +1,9 @@
 command;description
 help;help <name>\nВыводит справку по команде help
-add;add\nСоздаёт задачу\nadd '<name>' '<desc>' '<date>' '<tag1>,<tag2>'\nСоздаёт задачу из входных параметров
+add;add\nСоздаёт задачу\nadd '<name>' '<desc>' '<date>' '<tag1>                                                                                                                                                                                                                   ,<tag2>'\nСоздаёт задачу из входных параметров
 list;list\nВыводит список задач\nlist <n>\nВыводит n первых задач
 actual;actual\nВыводит список актуальных задач\actual <n>\nВыводит n первых актуальных задач
 export;export <file>\nЭкспортирует базу данных в файл <file> в формате JSON
 import;import <file> [strategy]\nИмпортирует базу данных из файла <file> в формате JSON со стратегией [strategy].\nСтратегии\nadd - добавить все задания из файла\nown - в случае конфликта принимает локальные изменения\ntheir - в случае конфликта принимает изменения из файла
+edit;edit\nРедактирует задачу
+delete;delete <id_or_name>\nУдаляет задачу с данным именем или id

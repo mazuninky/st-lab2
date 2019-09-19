@@ -15,6 +15,8 @@ interface TaskDBGateway {
 
     fun containsTask(id: Long): Boolean
 
+    fun deleteTask(task: Task)
+
     fun fetchTasks(): List<Task>
 
     fun clear()
