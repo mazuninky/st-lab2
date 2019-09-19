@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.50")
+    kotlin("jvm")
     id("org.flywaydb.flyway").version("6.0.2")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.3.50"
 }
