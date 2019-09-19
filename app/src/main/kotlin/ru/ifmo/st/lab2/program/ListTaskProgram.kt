@@ -21,7 +21,12 @@ class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
         tasks = if (args.isEmpty()) {
             fetchTaskUseCase()
         } else {
-            val n = args.first().toInt()
+            val n = args.first().toIntOrNull()
+
+            if (n == null) {
+                showMessage("Ожидалось число в качестве параметра!")
+                return
+            }
 
             if (n < 0) {
                 showMessage(ErrorMessage)

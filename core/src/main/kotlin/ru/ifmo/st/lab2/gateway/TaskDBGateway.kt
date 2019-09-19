@@ -9,6 +9,8 @@ interface TaskDBGateway {
         tasks.forEach { addTask(it) }
     }
 
+    fun update(task: Task)
+
     fun containsTask(id: Long): Boolean
 
     fun fetchTasks(): List<Task>

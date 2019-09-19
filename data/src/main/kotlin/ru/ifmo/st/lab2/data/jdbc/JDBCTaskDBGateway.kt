@@ -56,4 +56,8 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
             it.execute(query)
         }
     }
+
+    override fun update(task: Task) {
+        //TODO Implement
+    }
 }
