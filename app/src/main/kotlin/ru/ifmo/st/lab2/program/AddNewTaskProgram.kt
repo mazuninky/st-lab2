@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
 
-class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : StateBaseProgram<AddNewTaskProgram.ProgramStage>() {
+class AddNewTaskProgram(private val addNewTask: AddNewTaskUseCase) : StateBaseProgram<AddNewTaskProgram.ProgramStage>() {
     sealed class ProgramStage {
         object EnterName : ProgramStage()
         object EnterDescription : ProgramStage()
@@ -40,13 +40,12 @@ class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : StateBaseProgr
             transitionTo(ProgramStage.EnterDueDate)
         }
         state(ProgramStage.EnterDueDate) {
-            try {
-                dueDate = dateFormat.parse(input)
+            val parsedDate = dateFormat.parseOrNull(input)
+            if (parsedDate != null) {
+                dueDate = parsedDate
                 showMessage(ENTER_TAGS_MESSAGE)
                 transitionTo(ProgramStage.EnterTags)
-            } catch (e: NumberFormatException) {
-                showMessage(WRONG_DUE_DATE_MESSAGE)
-            } catch (e: ParseException) {
+            } else {
                 showMessage(WRONG_DUE_DATE_MESSAGE)
             }
         }
@@ -54,7 +53,7 @@ class AddNewTaskProgram(private val useCase: AddNewTaskUseCase) : StateBaseProgr
             tags = input.split(",")
                     .map(String::trim)
 
-            useCase(Task(name, description, dueDate, tags))
+            addNewTask(Task(name, description, dueDate, tags))
             finish()
         }
     }

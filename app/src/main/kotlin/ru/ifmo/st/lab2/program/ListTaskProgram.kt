@@ -8,8 +8,8 @@ import ru.ifmo.st.lab2.program.main.CommandProgram
 import java.lang.NumberFormatException
 import java.lang.StringBuilder
 
-class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
-                      private val fetchNTaskUseCase: FetchNTaskUseCase) : CommandProgram() {
+class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
+                      private val fetchNTask: FetchNTaskUseCase) : CommandProgram() {
     companion object {
         const val ErrorMessage = "Ожидалось положительное число"
     }
@@ -19,7 +19,7 @@ class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
     override fun afterStart() {
         val tasks: List<Task>
         tasks = if (args.isEmpty()) {
-            fetchTaskUseCase()
+            fetchTasks()
         } else {
             val n = args.first().toIntOrNull()
 
@@ -33,7 +33,7 @@ class ListTaskProgram(private val fetchTaskUseCase: FetchTaskUseCase,
                 return
             }
 
-            fetchNTaskUseCase(n)
+            fetchNTask(n)
         }
 
         tasks.map(Task::toView).forEach(this::showMessage)

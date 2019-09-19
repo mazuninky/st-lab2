@@ -16,6 +16,22 @@ END
 $$
     LANGUAGE plpgsql;
 
+CREATE FUNCTION add_tag_to_task(task_id bigint, tags varchar[])
+    RETURNS INT AS
+$$
+DECLARE
+    tag_item      varchar := null;
+    tag_insert_id INT     := NULL;
+BEGIN
+    FOREACH tag_item IN ARRAY tags
+        loop
+            tag_insert_id := add_tag(tag_item);
+            INSERT into task_tag VALUES (task_id, tag_insert_id);
+        end loop;
+END
+$$
+    LANGUAGE plpgsql;
+
 CREATE FUNCTION add_task(task_name varchar, task_description text, task_due_date timestamp, tags varchar[])
     RETURNS BOOLEAN AS
 $$

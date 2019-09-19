@@ -4,7 +4,7 @@ import ru.ifmo.st.lab2.domain.ImportDBUseCase
 import ru.ifmo.st.lab2.domain.ImportStrategy
 import ru.ifmo.st.lab2.program.main.CommandProgram
 
-class ImportProgram(private val useCase: ImportDBUseCase) : CommandProgram() {
+class ImportProgram(private val import: ImportDBUseCase) : CommandProgram() {
     companion object {
         const val ADD_STRATEGY = "add"
         const val ACCEPT_OWN_STRATEGY = "own"
@@ -29,7 +29,7 @@ class ImportProgram(private val useCase: ImportDBUseCase) : CommandProgram() {
                 return
             }
 
-            useCase(args.first(), strategy)
+            import(args.first(), strategy)
         }
         finish()
     }

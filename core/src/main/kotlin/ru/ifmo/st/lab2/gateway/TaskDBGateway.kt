@@ -11,6 +11,8 @@ interface TaskDBGateway {
 
     fun update(task: Task)
 
+    fun findTaskByIdOrName(value: String): Task?
+
     fun containsTask(id: Long): Boolean
 
     fun fetchTasks(): List<Task>

@@ -2,6 +2,7 @@ package ru.ifmo.st.lab2.data.jdbc
 
 import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
+import java.sql.ResultSet
 
 class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
     private val connection = db.connection
@@ -14,19 +15,23 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
 
     private fun List<String>.toSQLList() = joinToString(separator = ",") { "'$it'" }
 
+    private fun ResultSet.fetchTask(): Task {
+        val id = getLong("id")
+        val name = getString("name")
+        val description = getString("description")
+        val dueDate = getDate("due_date")
+        val tags = getArray("array_agg").array as Array<String>
+
+        return Task(name, description, dueDate, tags.toList(), id)
+    }
+
     override fun fetchTasks(): List<Task> {
         val tasks = mutableListOf<Task>()
         val query = "SELECT * FROM task_view;"
         connection.createStatement().use {
             val resultSet = it.executeQuery(query)
             while (resultSet.next()) {
-                val id = resultSet.getLong("id")
-                val name = resultSet.getString("name")
-                val description = resultSet.getString("description")
-                val dueDate = resultSet.getDate("due_date")
-                val tags = resultSet.getArray("array_agg").array as Array<String>
-
-                tasks.add(Task(name, description, dueDate, tags.toList(), id))
+                tasks.add(resultSet.fetchTask())
             }
         }
 
@@ -40,7 +45,7 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
 //            val result = it.executeQuery(query)
 //            isExits = result.next()
 //        }
-//        return isExits
+//
         val query = "SELECT * FROM task WHERE id = $id LIMIT 1;"
         var isExits = false
         connection.createStatement().use {
@@ -58,6 +63,29 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
     }
 
     override fun update(task: Task) {
-        //TODO Implement
+        val updateQuery = "UPDATE task SET name = '${task.name}', description = '${task.description}', due_date = '${task.dueData}' WHERE id = ${task.id};"
+        val deleteTagsQuery = "DELETE FROM task_tag WHERE task_id = ${task.id};"
+        val tagQuery = "SELECT add_tag_to_task('${task.id}', ARRAY[${task.tags.toSQLList()}]);"
+        connection.createStatement().use {
+            it.execute(updateQuery)
+            it.execute(deleteTagsQuery)
+            it.execute(tagQuery)
+        }
+    }
+
+    override fun findTaskByIdOrName(value: String): Task? {
+        var task: Task? = null
+        val query = "SELECT * FROM task_view WHERE id = $value OR name = $value;"
+        connection.createStatement().use {
+            val resultSet = it.executeQuery(query)
+            if (resultSet.fetchSize != 1)
+                return@use
+
+            resultSet.next()
+
+            task = resultSet.fetchTask()
+        }
+
+        return task
     }
 }
