@@ -26,4 +26,5 @@ val domainModule = buildContainer {
     factory<FetchOverdueTaskUseCase> { FetchOverdueTaskUseCaseImpl(get()) }
     factory<LoginUseCase> { LoginUseCaseImpl(get()) }
     factory<FetchUserInfoUseCase> { FetchUserInfoUseCaseImpl(get()) }
+    factory<RegistrationUseCase> { RegistrationUseCaseImpl(get()) }
 }

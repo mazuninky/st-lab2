@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.client.response.HttpResponse
 import io.ktor.http.HttpStatusCode
 import ru.ifmo.st.lab2.gateway.ServerGateway
+import ru.ifmo.st.lab2.gateway.SyncType
 
 class KtorServerGateway : ServerGateway {
 
@@ -30,5 +31,13 @@ class KtorServerGateway : ServerGateway {
         }
 
         return false
+    }
+
+    override suspend fun registration(login: String, pass: String): Boolean {
+        TODO("TODO")
+    }
+
+    override suspend fun sync(credentials: Credentials, dataBlob: String, syncType: SyncType) {
+        TODO("TODO")
     }
 }
