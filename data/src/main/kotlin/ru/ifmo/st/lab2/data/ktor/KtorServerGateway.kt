@@ -2,7 +2,7 @@ package ru.ifmo.st.lab2.data.ktor
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.apache.Apache
 import io.ktor.client.features.auth.Auth
 import io.ktor.client.features.auth.providers.basic
 import io.ktor.client.features.json.JsonFeature
@@ -30,7 +30,7 @@ import ru.ifmo.st.lab2.gateway.ServerGateway
 class KtorServerGateway : ServerGateway {
 
     override suspend fun login(login: String, pass: String): Boolean {
-        val client = HttpClient(CIO) {
+        val client = HttpClient(Apache) {
             install(Auth) {
                 basic {
                     username = login
@@ -51,7 +51,7 @@ class KtorServerGateway : ServerGateway {
     }
 
     override suspend fun registration(login: String, pass: String): Boolean {
-        val client = HttpClient(CIO)
+        val client = HttpClient(Apache)
         try {
             val userDTO = UserCredDTO(login, pass)
             val json = Json(JsonConfiguration.Stable)
@@ -70,7 +70,7 @@ class KtorServerGateway : ServerGateway {
     }
 
     override suspend fun loadToServer(credentials: Credentials, dataBlob: String): Boolean {
-        val client = HttpClient(CIO) {
+        val client = HttpClient(Apache) {
             install(Auth) {
                 basic {
                     username = credentials.username
@@ -94,8 +94,9 @@ class KtorServerGateway : ServerGateway {
     }
 
     override suspend fun loadFromServer(credentials: Credentials): String? {
-        val client = HttpClient(CIO) {
+        val client = HttpClient(Apache) {
             install(Auth) {
+
                 basic {
                     username = credentials.username
                     password = credentials.password

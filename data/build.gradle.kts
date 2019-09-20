@@ -32,7 +32,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
 
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-apache:$ktor_version")
     implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-json:$ktor_version")
     implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")

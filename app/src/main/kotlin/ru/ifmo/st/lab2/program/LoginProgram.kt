@@ -17,12 +17,12 @@ class LoginProgram(private val login: LoginUseCase) : ArgumentCommandProgram() {
 
     override fun afterStart() {
         val username = args.first()
-        if (username.length > 3) {
+        if (username.length < 3) {
             showMessage(USERNAME_SHORT)
             return
         }
         val password = args.second()
-        if (password.length > 4) {
+        if (password.length < 4) {
             showMessage(PASSWORD_SHORT)
             return
         }
