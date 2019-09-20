@@ -21,5 +21,8 @@ fun Task.toView(): String {
         stringBuilder.append(", Теги: ")
         stringBuilder.append(tags.joinToString(separator = ", "))
     }
+    if(id != null) {
+        stringBuilder.append(" [$id]")
+    }
     return stringBuilder.toString()
 }

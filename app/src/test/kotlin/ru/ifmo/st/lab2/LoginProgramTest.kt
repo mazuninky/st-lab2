@@ -17,6 +17,40 @@ import ru.ifmo.st.lab2.sample.sampleTask
 import ru.ifmo.st.lab2.sl.create
 
 class LoginProgramTest {
+    private val username = "username"
+    private val password = "password"
+
+    @Test
+    fun `test with short username`() = runUITest {
+        program { it.create<LoginProgram>() }
+        container {
+            single<LoginUseCase> {
+                mock {
+                    on { invoke(any(), any()) } doReturn true
+                }
+            }
+        }
+        args("123", password)
+        constructOutput {
+            single(LoginProgram.USERNAME_SHORT)
+        }
+    }
+
+    @Test
+    fun `test with short password`() = runUITest {
+        program { it.create<LoginProgram>() }
+        container {
+            single<LoginUseCase> {
+                mock {
+                    on { invoke(any(), any()) } doReturn true
+                }
+            }
+        }
+        args(username, "123")
+        constructOutput {
+            single(LoginProgram.PASSWORD_SHORT)
+        }
+    }
 
     @Test
     fun `test with valid credits`() = runUITest {
@@ -28,14 +62,14 @@ class LoginProgramTest {
                 }
             }
         }
-        args = listOf("kek", "lol")
+        args(username, password)
         constructOutput {
             single(LoginProgram.OK)
         }
     }
 
     @Test
-    fun `test with valid id`() = runUITest {
+    fun `test with invalid credits`() = runUITest {
         program { it.create<LoginProgram>() }
         container {
             single<LoginUseCase> {
@@ -44,7 +78,7 @@ class LoginProgramTest {
                 }
             }
         }
-        args = listOf("kek", "lol")
+        args(username, password)
         constructOutput {
             single(LoginProgram.INVALID_CREDITS)
         }
