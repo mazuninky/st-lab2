@@ -27,5 +27,5 @@ fun ResultSet.fetchTask(): Task {
     val state = getInt("state_id")
     val tags = getArray("array_agg").array as Array<String>
 
-    return Task(name, description, dueDate, tags.toList(), state.toTaskState(), id)
+    return Task(name, description, dueDate, tags.toList() ?: emptyList(), state.toTaskState(), id)
 }

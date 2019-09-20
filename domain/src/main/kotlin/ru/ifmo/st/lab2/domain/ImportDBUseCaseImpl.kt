@@ -8,7 +8,7 @@ import ru.ifmo.st.lab2.gateway.ImportGateway
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import java.io.File
 
-private fun Task.clearId(): Task {
+fun Task.clearId(): Task {
     id = null
     return this
 }

@@ -9,6 +9,7 @@ plugins {
     application
     kotlin("jvm")
     id("com.google.cloud.tools.jib") version "1.3.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.3.50"
 }
 
 group = "ru.ifmo.lab2"
@@ -34,6 +35,8 @@ dependencies {
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-jackson:$ktor_version")
     testCompile("io.ktor:ktor-server-tests:$ktor_version")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.12.0")
 }
 
 java {

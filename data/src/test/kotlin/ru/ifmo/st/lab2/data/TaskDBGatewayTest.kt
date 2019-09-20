@@ -8,7 +8,10 @@ import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.data.jdbc.DB
 import ru.ifmo.st.lab2.data.jdbc.JDBCTaskDBGateway
 import ru.ifmo.st.lab2.data.jdbc.fetchTask
+import ru.ifmo.st.lab2.data.jdbc.toSQLList
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
+import ru.ifmo.st.lab2.sample.currentClearTime
+import ru.ifmo.st.lab2.sample.currentTime
 import ru.ifmo.st.lab2.sample.makeSampleTask
 import java.io.File
 import java.sql.Connection
@@ -36,7 +39,7 @@ class TaskDBGatewayTest {
 
     @Test
     fun `test addTask`() {
-        val task = makeSampleTask()
+        val task = makeSampleTask().apply { dueData = Date(currentClearTime()) }
         taskDBGateway.addTask(task)
 
         var foundTask: Task? = null
@@ -49,9 +52,47 @@ class TaskDBGatewayTest {
         }
         Assertions.assertEquals(task, foundTask?.apply { id = null })
     }
-}
 
-//object TaskDBGatewayTest : Spek({
+    @Test
+    fun `test clear`() {
+        val task = makeSampleTask()
+        db.createTask(task)
+        taskDBGateway.clear()
+
+        var foundTask: Task? = null
+        val query = "SELECT * FROM task_view LIMIT 1;"
+        db.executeStatement {
+            val resultSet = it.executeQuery(query)
+            if (resultSet.next()) {
+                foundTask = resultSet.fetchTask()
+            }
+        }
+        Assertions.assertNull(foundTask)
+    }
+
+    @Test
+    fun `test fetchTask`() {
+        val task = makeSampleTask().apply { dueData = Date(currentClearTime()) }
+        db.createTask(task)
+
+       val actual = taskDBGateway.fetchTasks()
+
+        Assertions.assertEquals(1, actual.size)
+        Assertions.assertEquals(task, actual.first().apply { id = null })
+    }
+
+    @Test
+    fun `test find task by id or name`() {
+        val task = makeSampleTask(name = "my_name").apply { dueData = Date(currentClearTime()) }
+        db.createTask(task)
+
+        val actual = taskDBGateway.findTaskByIdOrName("my_name")
+
+        Assertions.assertNotNull(actual)
+        Assertions.assertEquals(task, actual?.apply { id = null })
+    }
+
+    //object TaskDBGatewayTest : Spek({
 //    val db = DB()
 //    val gateway: TaskDBGateway by memoized { JDBCTaskDBGateway(db) }
 //
@@ -116,12 +157,19 @@ class TaskDBGatewayTest {
 //        }
 //    }
 //})
+}
 
 fun DB.clearTables() {
     val query = "DELETE FROM task; DELETE FROM tag;"
     executeStatement {
         it.execute(query)
     }
+}
+
+fun DB.createTask(task: Task) {
+    val query =
+        "SELECT add_task('${task.name}', '${task.description}', '${task.dueData}', ARRAY[${task.tags.toSQLList()}]);"
+    executeStatement { it.execute(query) }
 }
 
 

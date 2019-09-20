@@ -24,12 +24,18 @@ dependencies {
     compile("org.postgresql:postgresql:42.2.5")
     compile("org.slf4j:slf4j-api:1.7.5")
     compile("org.slf4j:slf4j-simple:1.6.4")
+//    compile("org.apache.logging.log4j:log4j-api:2.6.2")
+//    compile("org.apache.logging.log4j:log4j-core:2.6.2")
+
+
 
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
 
-    implementation("io.ktor:ktor-client-apache:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
+    implementation("io.ktor:ktor-client-json:$ktor_version")
+    implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
 
     implementation("com.oracle.jdbc:ojdbc8:19.3.0.0")
     implementation("com.h2database:h2:1.4.199")

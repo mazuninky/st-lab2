@@ -18,6 +18,7 @@ class MainProgram : BaseProgram() {
         private const val OVERDUE_TASK_COMMAND = "overdue"
         private const val LOGIN_COMMAND = "login"
         private const val SYNC_COMMAND = "sync"
+        private const val REGISTRATION_COMMAND = "registration"
         private const val UNKNOWN_COMMAND = "Неизвестная команда"
         private const val CREATE_MESSAGE = "TO-DO List"
     }
@@ -47,6 +48,7 @@ class MainProgram : BaseProgram() {
             USER_COMMAND -> context.startProgram<UserProgram>()
             LOGIN_COMMAND -> context.startProgram<LoginProgram>()
             SYNC_COMMAND -> context.startProgram<SyncProgram>()
+            REGISTRATION_COMMAND -> context.startProgram<RegistrationProgram>()
 
             else -> {
                 showMessage(UNKNOWN_COMMAND)

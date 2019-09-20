@@ -1,12 +1,9 @@
 package ru.ifmo.st.lab2.data
 
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import ru.ifmo.st.lab2.core.Credentials
-import ru.ifmo.st.lab2.data.ktor.KtorServerGateway
-import ru.ifmo.st.lab2.gateway.ServerGateway
 import ru.ifmo.st.lab2.gateway.UserCredentialsGatewy
 
 class UserCredentialsGatewyTest {

@@ -12,8 +12,9 @@ fun Calendar.clearTime(): Calendar = apply {
     set(Calendar.MILLISECOND, 0)
 }
 
+fun currentClearTime() = Calendar.getInstance().clearTime().time.time
 
-fun currentTime() = Calendar.getInstance().clearTime().time.time
+fun currentTime() = Calendar.getInstance().time.time
 
 fun actualTime(appendix: Int): Date = Date(currentTime() + 5000 + appendix)
 fun outdatedTime(appendix: Int): Date = Date(currentTime() - 1 - appendix)
@@ -25,7 +26,7 @@ fun makeFixedTask(id: Long) = makeSampleTask(id, date = Date(0))
 fun makeSampleTask(
     id: Long? = null, name: String = "Sample task$id",
     description: String = "Simple description$id",
-    date: Date = Calendar.getInstance().clearTime().time,
+    date: Date = Calendar.getInstance().time,
     tags: List<String> = listOf("sample", "tags"),
     state: TaskState = TaskState.Backlog
 ): Task =
