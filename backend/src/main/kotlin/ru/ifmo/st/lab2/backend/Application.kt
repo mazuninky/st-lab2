@@ -11,13 +11,28 @@ import io.ktor.features.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.jetty.EngineMain.main(args)
 
+val creds = mutableMapOf(
+    "username" to "password"
+)
+
+fun Map<String, String>.login(username: String, password: String): Boolean {
+    if (containsKey(username)) {
+        return getValue(username) == password
+    }
+
+    return false
+}
+
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(Authentication) {
         basic("myBasicAuth") {
             realm = "TodoApp"
-            validate { if (it.name == "username" && it.password == "password") UserIdPrincipal(it.name) else null }
+            validate {
+                if (creds.login(it.name, it.password))
+                    UserIdPrincipal(it.name) else null
+            }
         }
     }
 

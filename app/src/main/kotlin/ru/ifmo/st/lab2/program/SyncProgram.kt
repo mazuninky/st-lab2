@@ -1,12 +1,12 @@
 package ru.ifmo.st.lab2.program
 
-import ru.ifmo.st.lab2.domain.ImportDBUseCase
-import ru.ifmo.st.lab2.domain.ImportStrategy
-import ru.ifmo.st.lab2.domain.LoginUseCase
+import ru.ifmo.st.lab2.domain.*
+import ru.ifmo.st.lab2.domains.SyncServerUseCase
+import ru.ifmo.st.lab2.domains.SyncType
 import ru.ifmo.st.lab2.program.main.ArgumentCommandProgram
 
 class SyncProgram(
-    private val registrate: RegistrationUseCase,
+    private val user: FetchUserInfoUseCase,
     private val sync: SyncServerUseCase
 ) : ArgumentCommandProgram() {
     companion object {
@@ -21,19 +21,17 @@ class SyncProgram(
     override fun validateArgs(args: List<String>) = args.size == 1
 
     override fun afterStart() {
-        if (user == null) {
+        if (user() == null) {
             showMessage(AUTH_ERR)
             return
         }
 
-
-        val syncType: SyncType
-        when (args.first()) {
+        val syncType: SyncType = when (args.first()) {
             UPLOAD -> {
-                syncType = SyncType.Upload
+                SyncType.Upload
             }
             DOWNLOAD -> {
-                syncType = SyncType.Download
+                SyncType.Download
             }
             else -> {
                 showMessage(SYNC_TYPE_ERR)

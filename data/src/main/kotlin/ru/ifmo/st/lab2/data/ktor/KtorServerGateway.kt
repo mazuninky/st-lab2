@@ -7,8 +7,9 @@ import io.ktor.client.features.auth.providers.basic
 import io.ktor.client.request.get
 import io.ktor.client.response.HttpResponse
 import io.ktor.http.HttpStatusCode
+import ru.ifmo.st.lab2.core.Credentials
+import ru.ifmo.st.lab2.domains.SyncType
 import ru.ifmo.st.lab2.gateway.ServerGateway
-import ru.ifmo.st.lab2.gateway.SyncType
 
 class KtorServerGateway : ServerGateway {
 

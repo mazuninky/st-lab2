@@ -1,3 +1,8 @@
 package ru.ifmo.st.lab2.sl
 
-class CantFindDependencyException : Exception()
+import kotlin.reflect.KClass
+
+class CantFindDependencyException(val expected: KClass<*>) : Exception() {
+    override val message: String?
+        get() = "can't find $expected"
+}

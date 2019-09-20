@@ -2,6 +2,7 @@ package ru.ifmo.st.lab2.module
 
 import ru.ifmo.st.lab2.domain.*
 import ru.ifmo.st.lab2.domain.fetch.*
+import ru.ifmo.st.lab2.domains.SyncServerUseCase
 import ru.ifmo.st.lab2.sl.buildContainer
 import ru.ifmo.st.lab2.sl.get
 
@@ -24,7 +25,8 @@ val domainModule = buildContainer {
     factory<SearchTasksByTagsUseCase> { SearchTasksByTagsUseCaseImpl(get()) }
     factory<DoneTaskUseCase> { DoneTaskUseCaseImpl(get()) }
     factory<FetchOverdueTaskUseCase> { FetchOverdueTaskUseCaseImpl(get()) }
-    factory<LoginUseCase> { LoginUseCaseImpl(get()) }
+    factory<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     factory<FetchUserInfoUseCase> { FetchUserInfoUseCaseImpl(get()) }
     factory<RegistrationUseCase> { RegistrationUseCaseImpl(get()) }
+    factory<SyncServerUseCase> { SyncServerUseCaseImpl(get(), get(), get(), get()) }
 }

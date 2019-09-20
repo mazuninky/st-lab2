@@ -15,7 +15,7 @@ class Container(vararg modules: Container) : InjectableContainer {
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> get(clazz: KClass<T>): T {
         if (!deps.containsKey(clazz))
-            throw CantFindDependencyException()
+            throw CantFindDependencyException(clazz)
 
         val dep = deps[clazz] as Dependency
         return when (dep) {

@@ -2,8 +2,10 @@ package ru.ifmo.st.lab2.domain
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.runBlocking
+import ru.ifmo.st.lab2.core.Credentials
 import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.gateway.ServerGateway
+import ru.ifmo.st.lab2.gateway.UserCredentialsGatewy
 
 class LoginUseCaseImpl(
     private val serverGateway: ServerGateway,

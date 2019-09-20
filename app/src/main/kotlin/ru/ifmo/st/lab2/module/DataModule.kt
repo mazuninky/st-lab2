@@ -1,6 +1,7 @@
 package ru.ifmo.st.lab2.module
 
 import ru.ifmo.st.lab2.data.DiskIOGateway
+import ru.ifmo.st.lab2.data.MemoryUserCredentialsGatewy
 import ru.ifmo.st.lab2.data.jdbc.DB
 import ru.ifmo.st.lab2.data.jdbc.JDBCTaskDBGateway
 import ru.ifmo.st.lab2.data.ktor.KtorServerGateway
