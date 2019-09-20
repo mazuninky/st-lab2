@@ -59,13 +59,14 @@ fun Application.module(testing: Boolean = false) {
 
             post("sync") {
                 val name = requireNotNull(call.principal<UserIdPrincipal>()?.name)
-                dataTable[name] = call.receive()
+                dataTable[name] = call.receive<ByteArray>().toString(Charsets.UTF_8)
                 call.respondText("Success", contentType = ContentType.Text.Plain)
             }
 
             get("sync") {
                 val name = requireNotNull(call.principal<UserIdPrincipal>()?.name)
-                call.respondText("${dataTable[name]}", contentType = ContentType.Text.Plain)
+                call.respondBytes { dataTable[name]!!.toByteArray(Charsets.UTF_8) }
+//                call.respondText("${}", contentType = ContentType.Text.Plain)
             }
         }
 

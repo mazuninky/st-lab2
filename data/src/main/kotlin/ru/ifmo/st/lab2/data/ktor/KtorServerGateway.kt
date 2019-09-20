@@ -13,6 +13,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.url
 import io.ktor.client.response.HttpResponse
+import io.ktor.content.ByteArrayContent
 import io.ktor.content.TextContent
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -81,7 +82,7 @@ class KtorServerGateway : ServerGateway {
         try {
             val loginResp = client.post<HttpResponse>() {
                 url("http://localhost:8080/sync")
-                body = TextContent(dataBlob, ContentType.Text.Plain)
+                body = ByteArrayContent(dataBlob.toByteArray(Charsets.UTF_8))
             }
             return loginResp.status == HttpStatusCode.OK
         } catch (e: Exception) {
@@ -96,7 +97,6 @@ class KtorServerGateway : ServerGateway {
     override suspend fun loadFromServer(credentials: Credentials): String? {
         val client = HttpClient(Apache) {
             install(Auth) {
-
                 basic {
                     username = credentials.username
                     password = credentials.password
@@ -107,7 +107,7 @@ class KtorServerGateway : ServerGateway {
             val loginResp = client.get<HttpResponse>() {
                 url("http://localhost:8080/sync")
             }
-            return if (loginResp.status == HttpStatusCode.OK) loginResp.receive() else null
+            return if (loginResp.status == HttpStatusCode.OK) loginResp.receive<ByteArray>().toString(Charsets.UTF_8) else null
         } catch (e: Exception) {
 
         } finally {

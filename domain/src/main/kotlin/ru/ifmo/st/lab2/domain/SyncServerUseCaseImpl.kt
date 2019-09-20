@@ -26,8 +26,8 @@ class SyncServerUseCaseImpl(
                         val fetched = serverGateway.loadFromServer(creds)
                         if (fetched != null) {
                             val imported = importGateway.import(fetched)
-//                            dbGateway.clear()
-                            dbGateway.addAll(imported)
+                            dbGateway.clear()
+                            dbGateway.addAll(imported.map { it.id = null; it })
                             true
                         } else false
                     }
