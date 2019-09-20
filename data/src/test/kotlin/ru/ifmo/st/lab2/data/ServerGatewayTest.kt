@@ -21,14 +21,14 @@ class ServerGatewayTest {
     private val testEnvUsername = "username"
     private val testEnvPassword = "password"
 
-//    @Test
-//    fun `test valid login`() = runBlocking {
-//        Assertions.assertTrue(serverGateway.login(testEnvUsername, testEnvPassword))
-//    }
-//
-//    @Test
-//    fun `test invalid login`() = runBlocking {
-//        Assertions.assertFalse(serverGateway.login("loldaddsd", testEnvPassword))
-//    }
+    @Test
+    fun `test valid login`() = runBlocking {
+        Assertions.assertTrue(serverGateway.login(testEnvUsername, testEnvPassword))
+    }
+
+    @Test
+    fun `test invalid login`() = runBlocking {
+        Assertions.assertFalse(serverGateway.login("loldaddsd", testEnvPassword))
+    }
 
 }
