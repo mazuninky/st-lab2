@@ -32,7 +32,7 @@ object ProgramFrameworkSpek : Spek({
             }
 
 
-            cWhen("run program") {
+            When("run program") {
                 framework.run()
             }
 
@@ -43,7 +43,7 @@ object ProgramFrameworkSpek : Spek({
                 }
             }
 
-            cThen("program process sampleInput: $sampleInput") {
+            Then("program process sampleInput: $sampleInput") {
                 verify(launchProgramMock).process(sampleInput)
             }
         }
@@ -56,7 +56,7 @@ object ProgramFrameworkSpek : Spek({
                 input = sampleInputs.toInputStream()
             }
 
-            cWhen("run program") {
+            When("run program") {
                 framework.run()
             }
 
@@ -67,7 +67,7 @@ object ProgramFrameworkSpek : Spek({
                 }
             }
 
-            cThen("program process sampleInputs: $sampleInputs") {
+            Then("program process sampleInputs: $sampleInputs") {
                 argumentCaptor<String>().apply {
                     verify(launchProgramMock, times(2)).process(capture())
 

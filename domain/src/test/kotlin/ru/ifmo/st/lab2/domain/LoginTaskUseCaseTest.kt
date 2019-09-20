@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import ru.ifmo.st.lab2.gateway.ServerGateway
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.*
 
 class LoginTaskUseCaseTest {
     private lateinit var serverGateway: ServerGateway

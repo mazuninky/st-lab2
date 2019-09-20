@@ -11,6 +11,7 @@ import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.domain.fetch.FetchActualTaskUseCaseImpl
 import ru.ifmo.st.lab2.domain.fetch.FetchNActualTaskUseCaseImpl
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
+import ru.ifmo.st.lab2.sample.*
 
 class FetchActualTaskUseCaseTest {
     private lateinit var dbGateway: TaskDBGateway

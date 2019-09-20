@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.*
 
 class UpdateTaskUseCaseTest {
     private lateinit var dbGateway: TaskDBGateway
@@ -17,6 +18,7 @@ class UpdateTaskUseCaseTest {
         dbGateway = mock {}
         update = UpdateTaskUseCaseImpl(dbGateway)
     }
+
     @Test
     fun `when invoke UseCase`() {
         update(sampleTask)

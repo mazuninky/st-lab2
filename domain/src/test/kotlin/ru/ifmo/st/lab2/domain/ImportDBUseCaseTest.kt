@@ -12,6 +12,7 @@ import ru.ifmo.st.lab2.gateway.IOGateway
 import ru.ifmo.st.lab2.gateway.ImportGateway
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.*
 
 class ImportDBUseCaseTest {
     private lateinit var importGateway: ImportGateway
@@ -19,9 +20,6 @@ class ImportDBUseCaseTest {
     private lateinit var ioGateway: IOGateway
     private lateinit var import: ImportDBUseCase
 
-    private val time = actualTime(0)
-
-    private fun makeFixedTask(id: Long) = makeSampleTask(id, date = time)
 
     private val importedTasks = listOf(
         makeFixedTask(48),

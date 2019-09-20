@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
+import ru.ifmo.st.lab2.sample.makeSampleTask
+import ru.ifmo.st.lab2.sample.sampleTask
 
 class AddNewTaskUseCaseTest {
     private lateinit var dbGateway: TaskDBGateway

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test
 import ru.ifmo.st.lab2.core.TaskState
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.makeSampleTask
+import ru.ifmo.st.lab2.sample.sampleTask
 
 class DoneTaskUseCaseTest {
     private lateinit var dbGateway: TaskDBGateway

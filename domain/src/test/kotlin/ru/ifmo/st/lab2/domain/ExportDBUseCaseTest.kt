@@ -10,6 +10,9 @@ import ru.ifmo.st.lab2.gateway.ExportGateway
 import ru.ifmo.st.lab2.gateway.IOGateway
 import ru.ifmo.st.lab2.gateway.TaskDBGateway
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.makeSampleTask
+import ru.ifmo.st.lab2.sample.sampleTask
+import ru.ifmo.st.lab2.sample.*
 
 class ExportDBUseCaseTest {
     private lateinit var exportGateway: ExportGateway

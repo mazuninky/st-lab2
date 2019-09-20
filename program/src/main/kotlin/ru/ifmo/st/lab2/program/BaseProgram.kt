@@ -8,10 +8,12 @@ abstract class BaseProgram : Program {
     private var state = State.PreInit
 
     final override fun start() {
-        if (state == State.Created || state == State.Stopped) {
+        check(state == State.Created || state == State.Stopped)
+
+        if (state != State.Stopped) {
             state = State.Working
             onStart()
-        } else throw IllegalProgramState()
+        }
     }
 
     protected open fun onStart() {
@@ -19,9 +21,7 @@ abstract class BaseProgram : Program {
     }
 
     final override fun stop() {
-        if (state != State.Working) {
-            throw IllegalProgramState()
-        }
+        check(state == State.Working || state == State.Finished)
 
         state = State.Stopped
 
@@ -41,9 +41,7 @@ abstract class BaseProgram : Program {
         private set
 
     final override fun create(context: Context, output: OutputHandler) {
-        if (state != State.PreInit) {
-            throw IllegalProgramState()
-        }
+        check(state == State.PreInit)
 
         this.output = output
 

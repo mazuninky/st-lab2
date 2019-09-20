@@ -15,6 +15,7 @@ import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
+import ru.ifmo.st.lab2.sample.*
 
 class FetchNActualTaskUseCaseTest {
     private lateinit var fetchActual: FetchActualTaskUseCase
