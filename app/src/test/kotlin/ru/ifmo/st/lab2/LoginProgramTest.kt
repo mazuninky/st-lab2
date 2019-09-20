@@ -30,7 +30,7 @@ class LoginProgramTest {
                 }
             }
         }
-        args("123", password)
+        args("1", password)
         constructOutput {
             single(LoginProgram.USERNAME_SHORT)
         }

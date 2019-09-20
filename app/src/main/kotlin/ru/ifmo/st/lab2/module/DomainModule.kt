@@ -29,4 +29,5 @@ val domainModule = buildContainer {
     factory<FetchUserInfoUseCase> { FetchUserInfoUseCaseImpl(get()) }
     factory<RegistrationUseCase> { RegistrationUseCaseImpl(get()) }
     factory<SyncServerUseCase> { SyncServerUseCaseImpl(get(), get(), get(), get(), get()) }
+    factory<CheckFileExistsUseCase> { CheckFileExistsUseCaseImpl(get()) }
 }

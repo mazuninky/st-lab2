@@ -11,4 +11,5 @@ class DiskIOGateway : IOGateway {
     override fun readFromFile(fileName: String): String =
         File(fileName).readText()
 
+    override fun checkFileExist(fileName: String): Boolean = File(fileName).exists()
 }
