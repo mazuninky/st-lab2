@@ -5,7 +5,6 @@ import ru.ifmo.st.lab2.program.*
 class MainProgram : BaseProgram() {
     companion object {
         private const val ADD_TASK_COMMAND = "add"
-        private const val FIND_TASK_COMMAND = "find"
         private const val LIST_TASK_COMMAND = "list"
         private const val ACTUAL_TASK_COMMAND = "actual"
         private const val EXPORT_TASK_COMMAND = "export"
@@ -33,7 +32,6 @@ class MainProgram : BaseProgram() {
 
         when (command.name) {
             ADD_TASK_COMMAND -> context.startProgram<AddNewTaskProgram>()
-            FIND_TASK_COMMAND -> finish()
             LIST_TASK_COMMAND -> context.startProgram<ListTaskProgram>()
             EXIT_TASK_COMMAND -> finish()
             HELP_TASK_COMMAND -> context.startProgram<HelpProgram>()

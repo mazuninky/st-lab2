@@ -9,10 +9,21 @@ import ru.ifmo.st.lab2.program.main.CommandProgram
 
 class FetchTagsProgram(private val fetchTags: FetchTagsUseCase) : ArgumentCommandProgram() {
 
+    companion object {
+        const val EMPTY = "Нет тегов!"
+        const val HEADER = "Список тэгов: "
+    }
+
     override fun validateArgs(args: List<String>) = args.size <= 1
 
     override fun afterStart() {
-        showMessage("Тэги: ")
-        showMessage(fetchTags().joinToString(", "))
+        val tags = fetchTags()
+        if (tags.isEmpty()) {
+            showMessage(EMPTY)
+            return
+        }
+
+        showMessage(HEADER)
+        showMessage(tags.joinToString(", "))
     }
 }

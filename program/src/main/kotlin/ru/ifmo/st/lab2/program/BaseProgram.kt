@@ -8,9 +8,9 @@ abstract class BaseProgram : Program {
     private var state = State.PreInit
 
     final override fun start() {
-        check(state == State.Created || state == State.Stopped)
+        check(state == State.Created || state == State.Stopped || state == State.Finished)
 
-        if (state != State.Stopped) {
+        if (state != State.Finished) {
             state = State.Working
             onStart()
         }
@@ -23,9 +23,11 @@ abstract class BaseProgram : Program {
     final override fun stop() {
         check(state == State.Working || state == State.Finished)
 
-        state = State.Stopped
+        if (state == State.Working) {
+            state = State.Stopped
 
-        onStop()
+            onStop()
+        }
     }
 
 

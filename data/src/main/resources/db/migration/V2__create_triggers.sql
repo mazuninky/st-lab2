@@ -19,7 +19,7 @@ DECLARE
     exists BOOLEAN := false;
 BEGIN
     exists := EXISTS(SELECT * FROM task_tag where tag_id = old.tag_id);
-    if !exists then
+    if not exists then
         DELETE FROM tag WHERE id = old.tag_id;
     end if;
     RETURN old;

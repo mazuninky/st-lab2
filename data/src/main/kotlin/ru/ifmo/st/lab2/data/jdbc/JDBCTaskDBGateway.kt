@@ -10,7 +10,8 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
 
     override fun addTask(task: Task) {
         check(task.id == null)
-        val query = "SELECT add_task('${task.name}', '${task.description}', '${task.dueData}', ARRAY[${task.tags.toSQLList()}]);"
+        val query =
+            "SELECT add_task('${task.name}', '${task.description}', '${task.dueData}', ARRAY[${task.tags.toSQLList()}]);"
         connection.createStatement().use { it.execute(query) }
     }
 
@@ -78,7 +79,8 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
     }
 
     override fun update(task: Task) {
-        val updateQuery = "UPDATE task SET name = '${task.name}', description = '${task.description}', due_date = '${task.dueData}' WHERE id = ${task.id};"
+        val updateQuery =
+            "UPDATE task SET name = '${task.name}', description = '${task.description}', due_date = '${task.dueData}' WHERE id = ${task.id};"
         val deleteTagsQuery = "DELETE FROM task_tag WHERE task_id = ${task.id};"
         val updateStateQuery = "UPDATE task_state SET state_id = ${task.state.toId()} WHERE task_id = ${task.id};"
         val tagQuery = "SELECT add_tags_to_task('${task.id}', ARRAY[${task.tags.toSQLList()}]);"
@@ -92,15 +94,21 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
 
     override fun findTaskByIdOrName(value: String): Task? {
         var task: Task? = null
-        val query = "SELECT * FROM task_view WHERE id = $value OR name = $value;"
+        val isNumber = value.toIntOrNull() != null
+        val query = if (isNumber)
+            "SELECT * FROM task_view WHERE id = $value::INTEGER OR name = '$value';"
+        else
+            "SELECT * FROM task_view WHERE name = '$value';"
         connection.createStatement().use {
             val resultSet = it.executeQuery(query)
-            if (resultSet.fetchSize != 1)
-                return@use
 
             resultSet.next()
 
             task = resultSet.fetchTask()
+
+            if(resultSet.next()) {
+                task = null
+            }
         }
 
         return task

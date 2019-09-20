@@ -9,10 +9,14 @@ import ru.ifmo.st.lab2.program.main.CommandProgram
 import java.lang.NumberFormatException
 import java.lang.StringBuilder
 
-class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
-                      private val fetchNTask: FetchNTaskUseCase) : ArgumentCommandProgram() {
+class ListTaskProgram(
+    private val fetchTasks: FetchTaskUseCase,
+    private val fetchNTask: FetchNTaskUseCase
+) : ArgumentCommandProgram() {
     companion object {
-        const val ErrorMessage = "Ожидалось положительное число"
+        const val LimitErrorMessage = "Ожидалось не отрицательное число в качестве параметра"
+        const val Empty = "Нет задач!"
+        const val List = "Список задач: "
     }
 
     override fun validateArgs(args: List<String>) = args.size <= 1
@@ -24,13 +28,8 @@ class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
         } else {
             val n = args.first().toIntOrNull()
 
-            if (n == null) {
-                showMessage("Ожидалось число в качестве параметра!")
-                return
-            }
-
-            if (n < 0) {
-                showMessage(ErrorMessage)
+            if (n == null || n < 0) {
+                showMessage(LimitErrorMessage)
                 return
             }
 
@@ -38,9 +37,9 @@ class ListTaskProgram(private val fetchTasks: FetchTaskUseCase,
         }
 
         if (tasks.isEmpty()) {
-            showMessage("Нет заданий")
+            showMessage(Empty)
         } else {
-            showMessage("Задания: ")
+            showMessage(List)
             tasks.map(Task::toView).forEach(this::showMessage)
         }
     }

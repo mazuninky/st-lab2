@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=todo
       - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=todo
-  backend:
-      image: backend:1.0.0
-      ports:
-        - 8080:8080
+#  backend:
+#      image: backend:1.0.0
+#      ports:
+#        - 8080:8080
