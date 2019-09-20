@@ -12,8 +12,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditTaskProgram(private val update: UpdateTaskUseCase,
-                      private val findByIdOrName: FindTaskByIdOrNameUseCase
+class EditTaskProgram(
+    private val update: UpdateTaskUseCase,
+    private val findByIdOrName: FindTaskByIdOrNameUseCase
 ) : StateBaseProgram<EditTaskProgram.ProgramState>() {
     sealed class ProgramState {
         object EnterNameOrId : ProgramState()
@@ -22,79 +23,118 @@ class EditTaskProgram(private val update: UpdateTaskUseCase,
 
     private lateinit var task: Task
 
+    companion object {
+        const val ENTER_ID_OR_NAME = "Введите название или id задания: "
+        const val ID_EMPTY = "Значение не может быть пустым!"
+        const val ID_ERROR = "Нет такого индентификатора или невозможно однозначно определить задание!"
+        const val ENTER_CHANGE = "Введите, что хотите изменить"
+
+        const val UNKNOWN = "Неизвестная команда!"
+        const val ABORT = "abort"
+        const val SAVE = "save"
+
+        const val COMMAND_EMPTY = "Необходимо ввести <название_поля> <значени>"
+
+        const val STATE = "state"
+        const val STATE_BACKLOG = "backlog"
+        const val STATE_WORKING = "working"
+        const val STATE_DONE = "done"
+        const val STATE_ERROR = "Неверное название состояния!"
+
+        const val NAME = "name"
+        const val DESCRIPTION = "description"
+        const val DATE = "date"
+        const val DATE_ERROR = "Введите дедлайн в формате день-месяц-год (01-02-1998)!"
+        const val TAGS = "tags"
+
+        const val ABORT_MESSAGE = "Изменения не сохранены"
+        const val OK = "Изменения сохранены"
+    }
+
     override fun defineMachine() = StateMachine.create<ProgramState> {
         setInitialState(ProgramState.EnterNameOrId)
         state(ProgramState.EnterNameOrId) {
-            check(input.isBlank())
-//            if (input.isBlank()) {
-//                showMessage("Значение не может быть пустым!")
-//                return@state
-//            }
+            if (input.isBlank()) {
+                showMessage(ID_EMPTY)
+                return@state
+            }
 
             val foundTask = findByIdOrName(input)
             if (foundTask == null) {
-                showMessage("Нет такого индентификатора или невозможно однозначно определить задание!")
+                showMessage(ID_ERROR)
                 return@state
             }
 
             task = foundTask
 
-            showMessage("Введите, что хотите изменить")
+            showMessage(ENTER_CHANGE)
             transitionTo(ProgramState.EnterChange)
         }
 
         state(ProgramState.EnterChange) {
-            val split = input.split(" ")
-
-            check(split.isNotEmpty())
+            val split = input.trim().split(" ")
+            if (split.first().isEmpty()) {
+                showMessage(COMMAND_EMPTY)
+                return@state
+            }
 
             if (split.size == 1) {
                 when (split.first()) {
-                    "abort" -> finish()
-                    "save" -> updateTask()
-                    else -> showMessage("Неизвестная команда!")
+                    ABORT -> {
+                        showMessage(ABORT_MESSAGE)
+                        finish()
+                    }
+                    SAVE -> {
+                        updateTask()
+                        showMessage(OK)
+                        finish()
+                    }
+                    DESCRIPTION -> {
+                        task.description = ""
+                    }
+                    else -> showMessage(UNKNOWN)
                 }
                 return@state
             }
 
             when (split.first()) {
-                "state" -> {
+                STATE -> {
                     val state = when (split.second()) {
-                        "backlog" -> TaskState.Backlog
-                        "working" -> TaskState.InProgress
-                        "done" -> TaskState.Done
+                        STATE_BACKLOG -> TaskState.Backlog
+                        STATE_WORKING -> TaskState.InProgress
+                        STATE_DONE -> TaskState.Done
                         else -> null
                     }
 
                     if (state == null) {
-                        showMessage("Неверное название состояния!")
+                        showMessage(STATE_ERROR)
                     } else {
                         task.state = state
                     }
                 }
-                "name" -> {
+                NAME -> {
                     task.name = split.subList(1, split.size).joinToString(separator = " ")
                 }
-                "description" -> {
+                DESCRIPTION -> {
                     task.description = split.subList(1, split.size).joinToString(separator = " ")
                 }
-                "date" -> {
-                    val parsedDate = dateFormat.parseOrNull(input)
+                DATE -> {
+                    val parsedDate = dateFormat.parseOrNull(split.second())
                     if (parsedDate != null) {
                         task.dueData = parsedDate
                     } else {
-                        showMessage("Введите дедлайн в формате день-месяц-год (01-02-1998)!")
+                        showMessage(DATE_ERROR)
                     }
                 }
-                "tags" -> {
+                TAGS -> {
                     task.tags = split.subList(1, split.size)
-                            .joinToString(" ")
-                            .split(",")
-                            .map(String::trim)
+                        .joinToString(" ")
+                        .split(",")
+                        .map(String::trim)
                 }
 
 
-                else -> showMessage("Неизвестная команда!")
+                else -> showMessage(UNKNOWN)
             }
         }
     }
@@ -107,6 +147,6 @@ class EditTaskProgram(private val update: UpdateTaskUseCase,
 
     override fun afterDefineMachine() {
         dateFormat = SimpleDateFormat("dd-MM-yyy")
-        showMessage("Введите название или id задания: ")
+        showMessage(ENTER_ID_OR_NAME)
     }
 }

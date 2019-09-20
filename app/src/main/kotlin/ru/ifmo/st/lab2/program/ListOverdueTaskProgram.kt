@@ -11,6 +11,10 @@ import java.lang.NumberFormatException
 import java.lang.StringBuilder
 
 class ListOverdueTaskProgram(private val fetchOverdueTasks: FetchOverdueTaskUseCase) : ArgumentCommandProgram() {
+    companion object {
+        const val EMPTY = "Нет просроченных заданий!"
+        const val HEAD = "Просроченные задания: "
+    }
 
     override fun validateArgs(args: List<String>) = args.isEmpty()
 
@@ -18,9 +22,9 @@ class ListOverdueTaskProgram(private val fetchOverdueTasks: FetchOverdueTaskUseC
         val tasks = fetchOverdueTasks()
 
         if (tasks.isEmpty()) {
-            showMessage("Нет просроченных заданий")
+            showMessage(EMPTY)
         } else {
-            showMessage("Просроченные задания: ")
+            showMessage(HEAD)
             tasks.map(Task::toView).forEach(this::showMessage)
         }
     }

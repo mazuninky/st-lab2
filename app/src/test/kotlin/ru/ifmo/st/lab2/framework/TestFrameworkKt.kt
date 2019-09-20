@@ -29,12 +29,49 @@ class ProgramTest(
     }
 }
 
-//class ProgramStoryBody() {
-//    private val input = mutableListOf<String>()
-//    private val output = mutableListOf<String>()
-//}
+class EnvBody {
+    private val mutableMap: MutableMap<String, Any> = mutableMapOf()
 
-class ConstructListBody() {
+    fun set(key: String, value: Any) {
+        mutableMap[key] = value
+    }
+
+    fun set(key: String, body: () -> Any) {
+        mutableMap[key] = body()
+    }
+
+    val map: Map<String, Any> = mutableMap
+}
+
+class StoryBody {
+    private val input = mutableListOf<String>()
+    private val output = mutableListOf<String>()
+
+    fun input(item: String) {
+        input.add(item)
+    }
+
+    fun input(vararg item: String) {
+        input.add(item.joinToString(" "))
+    }
+
+    fun input(body: () -> String) {
+        input.add(body())
+    }
+
+    fun output(item: String) {
+        output.add(item)
+    }
+
+    fun output(body: () -> String) {
+        output.add(body())
+    }
+
+    val inputLines: List<String> = input
+    val outputLines: List<String> = output
+}
+
+class ConstructListBody {
     private val list = mutableListOf<String>()
 
     fun single(item: String) {
@@ -43,6 +80,10 @@ class ConstructListBody() {
 
     fun single(body: () -> String) {
         list.add(body())
+    }
+
+    fun many(vararg items: String) {
+        list.addAll(items)
     }
 
     fun many(itemList: List<String>) {
@@ -70,6 +111,7 @@ data class ProgramTestContext(
     var programInit: (InjectableContainer) -> Program = { throw NotImplementedError(); },
     var args: List<String> = emptyList(),
     var output: List<String> = emptyList(),
+    var env: Map<String, Any> = emptyMap(),
     var isDebug: Boolean = false
 ) {
     inline fun container(body: Container.() -> Unit) {
@@ -80,8 +122,23 @@ data class ProgramTestContext(
         programInit = body
     }
 
+    fun env(body: EnvBody.() -> Unit) {
+        val envBody = EnvBody().apply(body)
+        env = envBody.map
+    }
+
     fun debug() {
         isDebug = true
+    }
+
+    fun args(vararg argList: String) {
+        args = argList.toList()
+    }
+
+    fun story(body: StoryBody.() -> Unit) {
+        val story = StoryBody().apply(body)
+        input = story.inputLines
+        output = story.outputLines
     }
 
     inline fun constructArgs(body: ConstructListBody.() -> Unit) {
@@ -103,7 +160,7 @@ data class ProgramTestContext(
         val recordHandler = RecordOutputHandler()
         val inputStream = "system_input\n".plus(input.joinToString("\n")).byteInputStream()
         val testApp = ProgramFramework(
-            StartProgramWithArgs(args, programInit),
+            StartProgramWithArgs(args, env, programInit),
             container = testContainer,
             output = recordHandler,
             input = inputStream

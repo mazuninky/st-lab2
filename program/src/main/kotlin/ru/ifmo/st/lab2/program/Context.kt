@@ -18,6 +18,10 @@ class Context(val container: InjectableContainer) {
         data[key] = value
     }
 
+    fun setMap(map: Map<String, Any>) {
+        map.forEach(this::setValue)
+    }
+
     @Suppress("UNCHECKED_CAST")
     fun <T> getValue(key: String): T {
         return data[key] as T

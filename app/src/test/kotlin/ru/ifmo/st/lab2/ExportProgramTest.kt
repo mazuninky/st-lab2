@@ -21,9 +21,23 @@ class ExportProgramTest {
         container {
             mock<ExportDBUseCase>()
         }
-        args = listOf("export.json")
+        args("export.json")
         constructOutput {
             single(ExportProgram.OK)
         }
     }
+
+    @Test
+    fun `test export with blank file name`() = runUITest {
+        program { it.create<ExportProgram>() }
+        container {
+            mock<ExportDBUseCase>()
+        }
+        args("   ")
+        constructOutput {
+            single(ExportProgram.FILE_IS_EMPTY)
+        }
+    }
+
+
 }

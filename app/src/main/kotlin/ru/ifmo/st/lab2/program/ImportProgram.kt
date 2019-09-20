@@ -10,13 +10,16 @@ class ImportProgram(private val import: ImportDBUseCase) : ArgumentCommandProgra
         const val ADD_STRATEGY = "add"
         const val ACCEPT_OWN_STRATEGY = "own"
         const val ACCEPT_THEIR_STRATEGY = "their"
+        const val FILE_IS_EMPTY = "Имя файла не может быть пустым"
+        const val STRATEGY_ERROR = "Неверное название стратегии"
+        const val OK = "Задачи были импортированы"
     }
 
     override fun validateArgs(args: List<String>) = args.size == 1 || args.size == 2
 
     override fun afterStart() {
         if (args.first().isBlank()) {
-            showMessage("Имя файла не может быть пустым!")
+            showMessage(FILE_IS_EMPTY)
         } else {
             val strategy = when (args.getOrElse(1) { ADD_STRATEGY }) {
                 ADD_STRATEGY -> ImportStrategy.Add
@@ -26,11 +29,12 @@ class ImportProgram(private val import: ImportDBUseCase) : ArgumentCommandProgra
             }
 
             if (strategy == null) {
-                showMessage("Неверное название стратегии")
+                showMessage(STRATEGY_ERROR)
                 return
             }
 
             import(args.first(), strategy)
+            showMessage(OK)
         }
     }
 
