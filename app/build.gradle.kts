@@ -19,8 +19,17 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":state"))
+
+    testImplementation(kotlin("test"))
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 }
 
 application {
     mainClassName = "ru.ifmo.st.lab2.app.MainKt"
+}
+
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

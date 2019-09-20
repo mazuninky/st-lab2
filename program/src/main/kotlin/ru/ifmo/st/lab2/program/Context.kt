@@ -2,6 +2,7 @@ package ru.ifmo.st.lab2.program
 
 import ru.ifmo.st.lab2.sl.Container
 import ru.ifmo.st.lab2.sl.InjectableContainer
+import ru.ifmo.st.lab2.sl.create
 import ru.ifmo.st.lab2.sl.get
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.cast
@@ -59,15 +60,7 @@ class Context(val container: InjectableContainer) {
     }
 
     inline fun <reified T : Program> startProgram() {
-        val constructor = T::class.primaryConstructor!!
-        if (constructor.parameters.isEmpty())
-            startProgram(T::class.createInstance())
-        else {
-            val args = constructor.valueParameters.map {
-                container.get(it.type.jvmErasure)
-            }
-            startProgram(constructor.call(*args.toTypedArray()))
-        }
+        startProgram(container.create<T>())
     }
 
 

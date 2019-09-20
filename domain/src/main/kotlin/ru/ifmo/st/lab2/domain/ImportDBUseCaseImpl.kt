@@ -14,32 +14,33 @@ private fun Task.clearId(): Task {
 }
 
 class ImportDBUseCaseImpl(
-        private val importGateway: ImportGateway,
-        private val taskDBUGateway: TaskDBGateway
+    private val importGateway: ImportGateway,
+    private val ioGateway: IOGateway,
+    private val taskDBUGateway: TaskDBGateway
 ) : ImportDBUseCase {
     override fun invoke(fileName: String, strategy: ImportStrategy) {
-        val importFile = File(fileName)
-        check(importFile.exists())
+        check(fileName.isNotBlank())
+        val data = ioGateway.readFromFile(fileName)
 
-        val importTasks = importGateway.import(importFile.readText())
+        val importTasks = importGateway.import(data)
         when (strategy) {
             Add -> {
                 taskDBUGateway.addAll(
-                        importTasks
-                                .map(Task::clearId)
-                )
-            }
-            AcceptOwn -> {
-                taskDBUGateway.addAll(
-                        importTasks
-                                .filter { val id = checkNotNull(it.id); taskDBUGateway.containsTask(id) }
-                                .map(Task::clearId)
+                    importTasks
+                        .map(Task::clearId)
                 )
             }
             AcceptTheir -> {
+                taskDBUGateway.addAll(
+                    importTasks
+                        .filter { val id = checkNotNull(it.id); taskDBUGateway.containsTask(id) }
+                        .map(Task::clearId)
+                )
+            }
+            AcceptOwn -> {
                 importTasks
-                        .filter { val id = checkNotNull(it.id); !taskDBUGateway.containsTask(id) }
-                        .forEach { taskDBUGateway.update(it) }
+                    .filter { val id = checkNotNull(it.id); !taskDBUGateway.containsTask(id) }
+                    .forEach { taskDBUGateway.update(it) }
             }
         }
     }

@@ -5,6 +5,7 @@ import ru.ifmo.st.lab2.gateway.TaskDBGateway
 
 class UpdateTaskUseCaseImpl(private val dbGateway: TaskDBGateway) : UpdateTaskUseCase {
     override fun invoke(task: Task) {
+        checkNotNull(task.id)
         dbGateway.update(task)
     }
 }

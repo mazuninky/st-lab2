@@ -6,7 +6,6 @@ import ru.ifmo.st.lab2.gateway.TaskDBGateway
 
 class DoneTaskUseCaseImpl(private val dbGateway: TaskDBGateway) : DoneTaskUseCase {
     override fun invoke(task: Task) {
-        task.state = TaskState.Done
-        dbGateway.update(task)
+        dbGateway.update(task.copy(state = TaskState.Done))
     }
 }

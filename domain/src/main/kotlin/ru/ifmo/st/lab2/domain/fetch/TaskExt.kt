@@ -6,12 +6,12 @@ import java.util.*
 
 internal fun Task.isOverdue(): Boolean {
     val today = Calendar.getInstance().time
-    return dueData.after(today)
+    return dueData.before(today)
 }
 
 internal fun Task.isActual(): Boolean {
     val today = Calendar.getInstance().time
-    return dueData.before(today)
+    return dueData.after(today)
 }
 
 internal fun Task.isDone(): Boolean {

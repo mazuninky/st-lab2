@@ -7,4 +7,8 @@ class DiskIOGateway : IOGateway {
     override fun writeToFile(fileName: String, data: String) {
         File(fileName).bufferedWriter().use { it.write(data) }
     }
+
+    override fun readFromFile(fileName: String): String =
+        File(fileName).readText()
+
 }

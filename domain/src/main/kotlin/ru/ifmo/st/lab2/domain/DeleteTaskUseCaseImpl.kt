@@ -5,6 +5,8 @@ import ru.ifmo.st.lab2.gateway.TaskDBGateway
 
 class DeleteTaskUseCaseImpl(private val DBGateway: TaskDBGateway) : DeleteTaskUseCase {
     override fun invoke(task: Task) {
+        checkNotNull(task.id)
+
         DBGateway.deleteTask(task)
     }
 }
