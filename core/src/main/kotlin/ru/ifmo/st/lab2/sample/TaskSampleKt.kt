@@ -5,19 +5,27 @@ import ru.ifmo.st.lab2.core.TaskState
 import java.util.*
 import kotlin.random.Random
 
-fun currentTime() = Calendar.getInstance().time.time
+fun Calendar.clearTime(): Calendar = apply {
+    set(Calendar.HOUR_OF_DAY, 0)
+    set(Calendar.MINUTE, 0)
+    set(Calendar.SECOND, 0)
+    set(Calendar.MILLISECOND, 0)
+}
+
+
+fun currentTime() = Calendar.getInstance().clearTime().time.time
 
 fun actualTime(appendix: Int): Date = Date(currentTime() + 5000 + appendix)
 fun outdatedTime(appendix: Int): Date = Date(currentTime() - 1 - appendix)
 
 val sampleTask = makeSampleTask(1)
 
- fun makeFixedTask(id: Long) = makeSampleTask(id, date = Date(0))
+fun makeFixedTask(id: Long) = makeSampleTask(id, date = Date(0))
 
 fun makeSampleTask(
     id: Long? = null, name: String = "Sample task$id",
     description: String = "Simple description$id",
-    date: Date = Calendar.getInstance().time,
+    date: Date = Calendar.getInstance().clearTime().time,
     tags: List<String> = listOf("sample", "tags"),
     state: TaskState = TaskState.Backlog
 ): Task =

@@ -17,4 +17,5 @@ val dataModule = buildContainer {
     single<ImportGateway> { SerializationImportGateway() }
     single<TaskDBGateway> { JDBCTaskDBGateway(get()) }
     single<ServerGateway> { KtorServerGateway() }
+    single<UserCredentialsGatewy> { MemoryUserCredentialsGatewy() }
 }

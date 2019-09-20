@@ -22,11 +22,13 @@ val ktor_version: String by project
 
 dependencies {
     compile("org.postgresql:postgresql:42.2.5")
+    compile("org.slf4j:slf4j-api:1.7.5")
+    compile("org.slf4j:slf4j-simple:1.6.4")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":core"))
 
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-apache:$ktor_version")
     implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
 
     implementation("com.oracle.jdbc:ojdbc8:19.3.0.0")
@@ -34,19 +36,15 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.zaxxer:HikariCP:3.3.1")
 
-    testImplementation("org.amshove.kluent:kluent:1.49")
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spek_version")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spek_version") {
-        exclude(group = "org.jetbrains.kotlin")
-        exclude(group = "org.junit.platform")
-    }
+    testImplementation(kotlin("test"))
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+
     testRuntimeOnly(kotlin("reflect"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.12.0")
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform {
-        includeEngines("spek")
-    }
+    useJUnitPlatform()
 }

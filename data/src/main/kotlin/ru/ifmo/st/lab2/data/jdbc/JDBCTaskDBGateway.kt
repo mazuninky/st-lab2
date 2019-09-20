@@ -15,32 +15,6 @@ class JDBCTaskDBGateway(db: DB) : TaskDBGateway {
         connection.createStatement().use { it.execute(query) }
     }
 
-    private fun List<String>.toSQLList() = joinToString(separator = ",") { "'$it'" }
-
-    private fun TaskState.toId(): Int = when (this) {
-        TaskState.Backlog -> 1
-        TaskState.InProgress -> 2
-        TaskState.Done -> 3
-    }
-
-    private fun Int.toTaskState(): TaskState = when (this) {
-        1 -> TaskState.Backlog
-        2 -> TaskState.InProgress
-        3 -> TaskState.Done
-        else -> throw IllegalArgumentException()
-    }
-
-    private fun ResultSet.fetchTask(): Task {
-        val id = getLong("id")
-        val name = getString("name")
-        val description = getString("description")
-        val dueDate = getDate("due_date")
-        val state = getInt("state_id")
-        val tags = getArray("array_agg").array as Array<String>
-
-        return Task(name, description, dueDate, tags.toList(), state.toTaskState(), id)
-    }
-
     override fun fetchTasks(): List<Task> {
         val tasks = mutableListOf<Task>()
         val query = "SELECT * FROM task_view;"

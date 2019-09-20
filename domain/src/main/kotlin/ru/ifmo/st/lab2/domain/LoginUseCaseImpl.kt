@@ -5,12 +5,20 @@ import kotlinx.coroutines.runBlocking
 import ru.ifmo.st.lab2.core.Task
 import ru.ifmo.st.lab2.gateway.ServerGateway
 
-class LoginUseCaseImpl(private val serverGateway: ServerGateway) : LoginUseCase {
+class LoginUseCaseImpl(
+    private val serverGateway: ServerGateway,
+    private val userCredentialsGatewy: UserCredentialsGatewy
+) : LoginUseCase {
     override fun invoke(username: String, password: String): Boolean {
         check(username.length > 3)
         check(password.length > 4)
-        return runBlocking {
+        val isOk = runBlocking {
             serverGateway.login(username, password)
         }
+
+        if (isOk)
+            userCredentialsGatewy.store(Credentials(username, password))
+
+        return isOk
     }
 }

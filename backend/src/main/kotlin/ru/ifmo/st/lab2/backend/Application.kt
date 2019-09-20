@@ -17,7 +17,7 @@ fun Application.module(testing: Boolean = false) {
     install(Authentication) {
         basic("myBasicAuth") {
             realm = "TodoApp"
-            validate { if (it.name == "test" && it.password == "password") UserIdPrincipal(it.name) else null }
+            validate { if (it.name == "username" && it.password == "password") UserIdPrincipal(it.name) else null }
         }
     }
 
