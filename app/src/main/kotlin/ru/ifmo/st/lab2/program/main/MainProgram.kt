@@ -11,6 +11,7 @@ class MainProgram : BaseProgram() {
         private const val EXIT_TASK_COMMAND = "exit"
         private const val HELP_TASK_COMMAND = "help"
         private const val EDIT_TASK_COMMAND = "edit"
+        private const val USER_COMMAND = "user"
         private const val DELETE_TASK_COMMAND = "delete"
         private const val TAG_COMMAND = "tags"
         private const val SEARCH_TASK_COMMAND = "search"
@@ -42,6 +43,7 @@ class MainProgram : BaseProgram() {
             TAG_COMMAND -> context.startProgram<FetchTagsProgram>()
             SEARCH_TASK_COMMAND -> context.startProgram<SearchTaskProgram>()
             OVERDUE_TASK_COMMAND -> context.startProgram<ListOverdueTaskProgram>()
+            USER_COMMAND -> context.startProgram<UserProgram>()
             LOGIN_COMMAND -> context.startProgram<LoginProgram>()
             else -> {
                 showMessage(UNKNOWN_COMMAND)
